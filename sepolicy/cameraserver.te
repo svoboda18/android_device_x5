@@ -1,0 +1,6 @@
+allow cameraserver nvram_device:blk_file { open read write };
+allow cameraserver sensorservice_service:service_manager find;
+allow cameraserver camera_device:chr_file { ioctl open read write };
+allow cameraserver devmap_device:chr_file { ioctl open read };
+allow cameraserver proc:file { ioctl open read };
+allow cameraserver sysfs:file getattr;
