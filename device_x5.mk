@@ -34,8 +34,7 @@ else
 endif
 
 PRODUCT_PACKAGES += \
-    libxlog \
-    libmtk_symbols
+    libxlog
 
 # Audio
 PRODUCT_PACKAGES += \
