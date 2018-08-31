@@ -23,7 +23,8 @@ TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
 
 # Kernel
 BOARD_KERNEL_CMDLINE += \
-	bootopt=64S3,32S1,32S1
+	bootopt=64S3,32S1,32S1 \
+	androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_PAGESIZE := 2048
 
@@ -128,7 +129,7 @@ USE_MINIKIN := true
 BOARD_GPS_LIBRARIES := true
 BOARD_MEDIATEK_USES_GPS := true
 
-ODEX := false
+ODEX := true
 
 ifeq ($(ODEX),true)
     WITH_DEXPREOPT := true
