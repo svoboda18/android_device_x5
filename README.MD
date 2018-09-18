@@ -19,9 +19,15 @@ For The Device: DOOGEE X5.
 - Screen/Video Recording (Without Color issues).
 - Both storages (SD and Internal) mounting in both Phone and PC.
 - Gapps.
+- MicroG
+- SafteyNet Got Baypassed.
 
 # Whats Not Working:
-- Nothing ForM Now.
+- Some Apps Will Give Graphics Gilitches.
+- Sometimes in Games,Screen Will Split.
+
+# Workaround:
+- Retate The Sceen / Close And Reopen the Game.
 
 # Credits:
 | People Who Helped/Contributed : |
