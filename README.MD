@@ -24,7 +24,6 @@ For The Device: DOOGEE X5.
 
 # Whats Not Working:
 - Some Apps Will Give Graphics Gilitches.
-- Sometimes in Games,Screen Will Split.
 
 # Workaround:
 - Retate The Sceen / Close And Reopen the Game.
