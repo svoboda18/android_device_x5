@@ -1,5 +1,5 @@
 # Device Tree for Building Lineage OS 14.1
-For The Device: DOOGEE X5.
+  **For The Device >> DOOGEE X5**
 - MT6580 Chipset
 - Marshmallow 6.0 (3.18.19 Kernel)
 - 5,0" 1280x720 display
