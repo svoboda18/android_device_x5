@@ -146,6 +146,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	MiraVision
 
+# Set default player to AwesomePlayer
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.media.use-awesome=true
+
+# AAPT
+PRODUCT_AAPT_CONFIG := normal
+
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_x5
 # PRODUCT_DEVICE := x5
