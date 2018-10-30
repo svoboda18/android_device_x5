@@ -7,8 +7,9 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
-# Inherit device configuration
-$(call inherit-product, device/doogee/x5/device_x5.mk)
+# Inherit next-device configuration
+# hack for vendor
+$(call inherit-product, device/doogee/x5/full_x5.mk)
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := x5
