@@ -27,6 +27,7 @@ DEVICE_PACKAGE_OVERLAYS += device/doogee/x5/overlay
 PRODUCT_PACKAGE_OVERLAYS += device/doogee/x5/overlay # enable this to be able overlay a default wallpaper
 
 LOCAL_PATH := device/doogee/x5
+
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
 else
@@ -59,6 +60,7 @@ PRODUCT_PACKAGES += \
     dhcpcd.conf \
     wpa_supplicant \
     wpa_supplicant.conf
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:system/etc/hostapd/hostapd.accept \
@@ -72,6 +74,9 @@ PRODUCT_COPY_FILES += \
 # GPS
 PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/configs/agps_profiles_conf2.xml:system/etc/agps_profiles_conf2.xml
+
+PRODUCT_PACKAGES += \
+	gps.mt6580
 
 # Keylayout
 PRODUCT_COPY_FILES += \
@@ -138,20 +143,9 @@ PRODUCT_PACKAGES += \
     libmrdump \
     mrdump_tool
 
-##GPS
-PRODUCT_PACKAGES += \
-	gps.mt6580
-
 # MiraVision
 PRODUCT_PACKAGES += \
 	MiraVision
-
-# Set default player to AwesomePlayer
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.media.use-awesome=true
-
-# AAPT
-PRODUCT_AAPT_CONFIG := normal
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_x5
