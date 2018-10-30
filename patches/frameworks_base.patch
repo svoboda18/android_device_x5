@@ -14,6 +14,5 @@ index a68a60274ac..c6fc5088577 100644
    "/dev/ion",
    "/dev/dri/renderD129", // Fixes b/31172436
 +  "/proc/ged", // MTK add
-   "/system/framework/org.cyanogenmod.platform-res.apk",
  #ifdef PATH_WHITELIST_EXTRA_H
  PATH_WHITELIST_EXTRA_H
