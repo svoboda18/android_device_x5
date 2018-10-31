@@ -1,6 +1,9 @@
 # system.prop
 # doogee x5
 
+# navbar  0 or 1 enable/disable 
+qemu.hw.mainkeys=1
+
 rild.libpath=mtk-ril.so
 rild.libargs=-d /dev/ttyC0
 
@@ -48,13 +51,12 @@ ro.sf.lcd_density=320
 # performance
 ro.mtk_perf_simple_start_win=1
 ro.mtk_perf_response_time=1
-persist.sys.timezone = America/Chicago
+persist.sys.timezone = Europe/Moscow
 
 ro.mtk_perfservice_support=1
-=/data/anr/mtk_traces.tx
 persist.logd.logpersistd=logcatd
 
-ro.telephony.default_network=2
+ro.telephony.default_network=0
 
 # ClearMotion
 persist.sys.display.clearMotion=0

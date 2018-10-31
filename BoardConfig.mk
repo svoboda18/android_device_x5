@@ -3,6 +3,10 @@
 
 TARGET_SPECIFIC_HEADER_PATH := device/doogee/x5/include
 
+# ODEX
+WITH_DEXPREOPT := false
+DISABLE_DEXPREOPT := true
+
 # Platform
 TARGET_BOARD_PLATFORM := mt6580
 TARGET_NO_BOOTLOADER := true
@@ -17,7 +21,6 @@ TARGET_CPU_VARIANT := cortex-a7
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := mt6580
-
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
 
@@ -40,7 +43,6 @@ TARGET_PREBUILT_KERNEL := device/doogee/x5/kernel
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x04000000 --tags_offset 0x0e000000
 
 BOARD_CUSTOM_BOOTIMG := true
-
 TARGET_KMODULES := true
 
 # Assert
@@ -61,6 +63,10 @@ TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
 BOARD_HAS_MTK_HARDWARE := true
 BOARD_USES_MTK_HARDWARE := true
 MTK_HARDWARE := true
+
+# GPS
+BOARD_GPS_LIBRARIES := true
+BOARD_MEDIATEK_USES_GPS := true
 
 # RIL 
 BOARD_RIL_CLASS := ../../../device/doogee/x5/ril/
@@ -102,13 +108,21 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 # TWRP stuff
 TW_THEME := portrait_hdpi
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
-TW_BRIGHTNESS_PATH := /sys/devices/mtk_leds@bus/leds/lcd-backlight/brightness
+TW_NO_REBOOT_BOOTLOADER := true
+TW_BRIGHTNESS_PATH := /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/musb-hdrc.0.auto/gadget/lun%d/file
 TW_MAX_BRIGHTNESS := 255
 TW_EXCLUDE_SUPERSU := true
 TW_INCLUDE_FB2PNG := true
+TW_NO_CPU_TEMP := true
+TW_REBOOT_BOOTLOADER := true
+TW_REBOOT_RECOVERY := true
+TW_HAS_DOWNLOAD_MODE := true
+TW_EXCLUDE_SUPERSU := true
 TW_USE_TOOLBOX := true
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
 
+# Sepolicy
 BOARD_SEPOLICY_DIRS := \
        device/doogee/x5/sepolicy
 
@@ -120,20 +134,3 @@ BOARD_SECCOMP_POLICY += device/doogee/x5/seccomp
 
 BLOCK_BASED_OTA := false
 TARGET_LDPRELOAD += libxlog.so:libmtk_symbols.so
-
-# GPS
-BOARD_GPS_LIBRARIES := true
-BOARD_MEDIATEK_USES_GPS := true
-
-ODEX := false
-
-ifeq ($(ODEX),true)
-    WITH_DEXPREOPT := true
-    DISABLE_DEXPREOPT := false
-endif
-
-ifeq ($(ODEX),false)
-    WITH_DEXPREOPT := false
-    DISABLE_DEXPREOPT := true
-endif
-

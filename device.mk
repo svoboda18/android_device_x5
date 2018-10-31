@@ -2,32 +2,34 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # These additionals go to /default.prop
-ADDITIONAL_DEFAULT_PROPERTIES += \
-    persist.service.acm.enable=0 \
-    persist.sys.usb.config=mtp \
-    ro.mount.fs=EXT4 \
-    debug.hwui.render_dirty_regions=false \
-    persist.radio.multisim.config=dsds \
-    ro.telephony.ril_class=MT6580 \
-    ro.telephony.ril.config=signalstrength \
-    ro.telephony.sim.count=2 \
-    persist.gemini.sim_num=2 \
-    ril.current.share_modem=2 \
-    ro.mtk_gps_support=1 \
-    ro.mtk_agps_app=1 \
-    persist.debug.xlog.enable=1 \
-    persist.sys.display.clearMotion=0
+ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=0 \
+ro.allow.mock.location=1 \
+ro.debuggable=1 \
+ro.adb.secure=0 \
+persist.service.acm.enable=0 \
+persist.sys.usb.config=mtp \
+ro.mount.fs=EXT4 \
+debug.hwui.render_dirty_regions=false \
+persist.radio.multisim.config=dsds \
+ro.telephony.ril_class=MT6580 \
+ro.telephony.ril.config=signalstrength \
+ro.telephony.sim.count=2 \
+persist.gemini.sim_num=2 \
+ril.current.share_modem=2 \
+ro.mtk_gps_support=1 \
+ro.mtk_agps_app=1 \
+persist.debug.xlog.enable=1 \
+persist.sys.display.clearMotion=0 
 
 # The gps config appropriate for this device
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
-$(call inherit-product, vendor/doogee/x5/x5-vendor-blobs.mk)
+$(call inherit-product-if-exists, vendor/doogee/x5/x5-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/doogee/x5/overlay
 PRODUCT_PACKAGE_OVERLAYS += device/doogee/x5/overlay # enable this to be able overlay a default wallpaper
 
 LOCAL_PATH := device/doogee/x5
-
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
 else
@@ -63,7 +65,6 @@ PRODUCT_PACKAGES += \
     dhcpcd.conf \
     wpa_supplicant \
     wpa_supplicant.conf
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:system/etc/hostapd/hostapd.accept \
@@ -74,12 +75,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/ecc_list.xml:system/etc/ecc_list.xml \
     $(LOCAL_PATH)/configs/spn-conf.xml:system/etc/spn-conf.xml
 
-# GPS
+# AGPS
 PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/configs/agps_profiles_conf2.xml:system/etc/agps_profiles_conf2.xml
-
-PRODUCT_PACKAGES += \
-	gps.mt6580
 
 # Keylayout
 PRODUCT_COPY_FILES += \
@@ -146,13 +144,15 @@ PRODUCT_PACKAGES += \
     libmrdump \
     mrdump_tool
 
+# GPS
+PRODUCT_PACKAGES += \
+	gps.mt6580
+
 # MiraVision
 PRODUCT_PACKAGES += \
 	MiraVision
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
-PRODUCT_NAME := full_x5
-# PRODUCT_DEVICE := x5
 
 TARGET_SCREEN_HEIGHT := 1280
 TARGET_SCREEN_WIDTH := 720
