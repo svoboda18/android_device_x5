@@ -56,7 +56,6 @@ BOARD_EGL_CFG := device/doogee/x5/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
-USE_OPENGL_RENDERER := true
 
 # MTK Hardware
 BOARD_HAS_MTK_HARDWARE := true
@@ -122,14 +121,11 @@ BOARD_SECCOMP_POLICY += device/doogee/x5/seccomp
 BLOCK_BASED_OTA := false
 TARGET_LDPRELOAD += libxlog.so:libmtk_symbols.so
 
-# Enable Minikin text layout engine (will be the default soon)
-USE_MINIKIN := true
-
 # GPS
 BOARD_GPS_LIBRARIES := true
 BOARD_MEDIATEK_USES_GPS := true
 
-ODEX := true
+ODEX := false
 
 ifeq ($(ODEX),true)
     WITH_DEXPREOPT := true
