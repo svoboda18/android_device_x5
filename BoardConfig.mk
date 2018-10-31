@@ -129,7 +129,7 @@ USE_MINIKIN := true
 BOARD_GPS_LIBRARIES := true
 BOARD_MEDIATEK_USES_GPS := true
 
-ODEX := false
+ODEX := true
 
 ifeq ($(ODEX),true)
     WITH_DEXPREOPT := true
