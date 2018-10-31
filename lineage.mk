@@ -8,8 +8,7 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
 # Inherit next-device configuration
-# hack for vendor
-$(call inherit-product, device/doogee/x5/full_x5.mk)
+# Dont Be Here ,Pre-Built Kernel Is Deprected.
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := x5
@@ -28,3 +27,6 @@ PRODUCT_COPY_FILES := device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.
 # SuperUser
 WITH_SU := false
 WITH_ROOT := false
+
+# Be here,bypass the detection & hacks will woks.
+$(call inherit-product, device/doogee/x5/device.mk)
