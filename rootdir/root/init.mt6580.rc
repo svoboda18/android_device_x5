@@ -6,6 +6,10 @@ import init.modem.rc
 on early-init
     # Turn off backlight on blank
     write /sys/class/leds/lcd-backlight/trigger "backlight"
+    
+    # mount the debugfs
+    mount debugfs none /sys/kernel/debug/
+    chmod 0755 /sys/kernel/debug
 
 on init
     export LD_PRELOAD libsigchain.so:libxlog.so:libmtk_symbols.so
