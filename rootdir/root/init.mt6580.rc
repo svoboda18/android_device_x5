@@ -1,19 +1,8 @@
-# MTK platform .rc configure
+# MTK6580 rc configure
 
 import init.project.rc
-import /FWUpgradeInit.rc
-import init.xlog.rc
-import init.aee.rc
-import init.ssd.rc
-import init.no_ssd.rc
-import init.ssd_nomuser.rc
-import init.fon.rc
-import init.volte.rc
-import init.epdg.rc
-import init.trustonic.rc
 import init.modem.rc
-import init.target.rc
-import /init.trace.rc
+
 on early-init
     # Turn off backlight on blank
     write /sys/class/leds/lcd-backlight/trigger "backlight"
