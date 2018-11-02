@@ -18,10 +18,6 @@ on early-init
     chmod 0755 /sys/kernel/debug
 
 on init
-    # BATTERY proc
-    chown shell system /proc/mtk_battery_cmd/current_cmd
-    chown shell system /proc/mtk_battery_cmd/discharging_cmd
-
     export LD_PRELOAD libsigchain.so:libxlog.so:libmtk_symbols.so
     export LD_SHIM_LIBS /system/lib/libvtmal.so|libmtk_symbols.so
     export USBOTG_STORAGE /storage/usbotg
@@ -32,17 +28,17 @@ on init
     chmod 0666 /dev/kmsg
 
 # Temp Backward compatibility
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/boot /dev/bootimg
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/recovery /dev/recovery
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/secro  /dev/sec_ro
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/kb /dev/kb
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/dkb /dev/dkb
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/seccfg /dev/seccfg
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/proinfo /dev/pro_info
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/nvram /dev/nvram
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/para /dev/misc
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/logo /dev/logo
-    symlink /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/misc2 /dev/misc2
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/boot /dev/bootimg
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/recovery /dev/recovery
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/secro  /dev/sec_ro
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/kb /dev/kb
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/dkb /dev/dkb
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/seccfg /dev/seccfg
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/proinfo /dev/pro_info
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/nvram /dev/nvram
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/para /dev/misc
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/logo /dev/logo
+    symlink /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/misc2 /dev/misc2
 
 # Temp Backward compatibility
     # Platform-specific mount points
@@ -68,23 +64,23 @@ on fs
     write /proc/bootprof "INIT:Mount_START"
     mount_all /fstab.mt6580
     swapon_all /fstab.mt6580
-    exec /system/bin/tune2fs -O has_journal -u 10010 -r 4096 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/userdata
-    exec /system/bin/chmod 0640 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/boot
-    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/boot
-    exec /system/bin/chmod 0640 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/recovery
-    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/recovery
-    exec /system/bin/chmod 0640 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/secro
-    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/secro
-    exec /system/bin/chmod 0660 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/seccfg
-    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/seccfg
-    exec /system/bin/chmod 0660 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/proinfo
-    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/proinfo
-    exec /system/bin/chmod 0660 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/otp
-    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/otp
-    exec /system/bin/chmod 0660 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/para
-    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/para
-    exec /system/bin/chmod 0660 /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/logo
-    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/logo
+    exec /system/bin/tune2fs -O has_journal -u 10010 -r 4096 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/userdata
+    exec /system/bin/chmod 0640 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/boot
+    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/boot
+    exec /system/bin/chmod 0640 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/recovery
+    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/recovery
+    exec /system/bin/chmod 0640 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/secro
+    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/secro
+    exec /system/bin/chmod 0660 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/seccfg
+    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/seccfg
+    exec /system/bin/chmod 0660 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/proinfo
+    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/proinfo
+    exec /system/bin/chmod 0660 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/otp
+    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/otp
+    exec /system/bin/chmod 0660 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/para
+    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/para
+    exec /system/bin/chmod 0660 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/logo
+    exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/logo
 
     write /proc/bootprof "INIT:Mount_END"
 
