@@ -2,7 +2,7 @@
 PRODUCT_RELEASE_NAME := X5
 
 # Inherit some common LineageOS stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+$(call inherit-product, vendor/cm/config/common_mini_phone.mk)
 
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
@@ -21,12 +21,6 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     BUILD_FINGERPRINT=DOOGEE/full_hct6580_weg_c_m/hct6580_weg_c_m:6.0/MRA58K/1504516469:user/test-keys \
     PRIVATE_BUILD_DESC="full_hct6580_weg_c_m-user 6.0 MRA58K 1504516469 test-keys"
 
-# Get the long list of APNs
-#PRODUCT_COPY_FILES := device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.xml
-
 # SuperUser
 WITH_SU := false
 WITH_ROOT := false
-
-# Be here,bypass the detection & hacks will woks.
-#$(call inherit-product, device/doogee/x5/device.mk)

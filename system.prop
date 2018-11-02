@@ -1,64 +1,57 @@
-# system.prop
-# doogee x5
+# system.prop for
+# DOOGEE X5
 
-# navbar  0 or 1 enable/disable 
+# Hardware
+ro.hardware=mt6580
+
+# Navbar (disabled) 
 qemu.hw.mainkeys=1
 
+# RIL
 rild.libpath=mtk-ril.so
 rild.libargs=-d /dev/ttyC0
+ro.telephony.default_network=0
 
-# MTK, Infinity, 20090720 {
+# WiFi
 wifi.interface=wlan0
-ro.hardware=mt6580
-# MTK, Infinity, 20090720 }
-
-# MTK, mtk03034, 20101210 {
 ro.mediatek.wlan.wsc=1
-# MTK, mtk03034 20101210}
-# MTK, mtk03034, 20110318 {
 ro.mediatek.wlan.p2p=1
-# MTK, mtk03034 20110318}
-
-# MTK, mtk03034, 20101213 {
 mediatek.wlan.ctia=0
-# MTK, mtk03034 20101213}
-
-#
 wifi.tethering.interface=ap0
-#
-
-#
-dalvik.vm.mtk-stack-trace-file=/data/anr/mtk_traces.txt
-#
-
-ro.opengles.version=131072
-
 wifi.direct.interface=p2p0
 
-# audio
-ro.camera.sound.forced=0
-ro.audio.silent=0
-
-ro.zygote.preload.enable=0
-
-ro.kernel.zio=38,108,105,16
-
-# Disable dirty region for Mali
-debug.hwui.render_dirty_regions=false
-
-ro.sf.lcd_density=320
-
-# performance
-ro.mtk_perf_simple_start_win=1
-ro.mtk_perf_response_time=1
-persist.sys.timezone = Europe/Moscow
-
+# Logging
+dalvik.vm.mtk-stack-trace-file=/data/anr/mtk_traces.txt
 ro.mtk_perfservice_support=1
 persist.logd.logpersistd=logcatd
 
-ro.telephony.default_network=0
+# OpenGL
+ro.opengles.version=131072
+debug.hwui.render_dirty_regions=false
+
+# Audio
+ro.camera.sound.forced=0
+ro.audio.silent=0
+
+# Kernel Related
+ro.zygote.preload.enable=0
+ro.kernel.zio=38,108,105,16
+
+# LCD DPI
+ro.sf.lcd_density=320
+
+# Performance
+ro.mtk_perf_simple_start_win=1
+ro.mtk_perf_response_time=1
+ro.sys.fw.bg_apps_limit=7
+ro.config.low_ram=true
+persist.sys.force_highendgfx=true
+
+# Time Zone
+persist.sys.timezone = Europe/Moscow
 
 # ClearMotion
 persist.sys.display.clearMotion=0
 
+# FM
 fmradio.driver.enable=1

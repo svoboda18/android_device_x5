@@ -64,14 +64,7 @@ on fs
     mount_all /fstab.mt6580
     swapon_all /fstab.mt6580
     exec /system/bin/tune2fs -O has_journal -u 10010 -r 4096 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/userdata
-
-    # Trying to fix nvram block device permissions
-
-    #chown root system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/nvram
-    #chmod 0777 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/nvram
-    #exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/nvram
-    #exec /system/bin/chmod 0777 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/nvram
-
+    
     exec /system/bin/chmod 0640 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/boot
     exec /system/bin/chown root:system /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/boot
     exec /system/bin/chmod 0640 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/recovery
@@ -613,10 +606,9 @@ on post-fs-data
     chmod 0660 /dev/mtk_sched
     chown system media /dev/mtk_sched
 
-    #BT SCO CVSD, for MT6572 and MT6582 CVSD codec on AP
+    #BT SCO CVSD
     chmod 0660 /dev/ebc
     chown media media /dev/ebc
-
     chmod 0666 /dev/uio0
 
     #otp
@@ -650,12 +642,10 @@ on post-fs-data
 
     # AGPS
     mkdir /data/agps_supl 0771 gps system
-
     chmod 0666 /dev/exm0
 
     # Recycle stuffs
     exec /system/bin/rm -f /cache/.ipoh.img
-    
     chmod 0666 /dev/exm0
 	
 	#Thermal	
@@ -663,36 +653,33 @@ on post-fs-data
 	
     #create directory /data/subt for subtitle
     mkdir /mnt/subt/ 0770 media media
+    
 # End of adding by MTK drivers
 # -----------------------
 
 on boot
 
     # Tweaks By SaMad SegMane
+    # Swap tweaks
+    write /proc/sys/vm/dirty_background_ratio 5
+    write /proc/sys/vm/dirty_expire_centisecs 200
+    write /proc/sys/vm/min_free_order_shift 4
     write /proc/sys/vm/page-cluster 0
-    write /proc/sys/vm/dirty_writeback_centisecs 1000
-    write /proc/sys/vm/swappiness 120
-    write /proc/sys/vm/dirty_expire_centisecs 500
-    write /proc/sys/vm/vfs_cache_pressure 200
-    write /proc/sys/vm/dirty_ratio 90
-    write /proc/sys/vm/dirty_background_ratio 75
+    write /proc/sys/vm/swappiness 60
+    write /proc/sys/vm/vfs_cache_pressure 50
     
     # xlog
     start xlogboot
-
-    write /proc/sys/vm/dirty_writeback_centisecs 300
+    
+    # LCD & LEDS
     chmod 0660 /sys/power/autosleep
-
     chmod 0664 /sys/class/leds/lcd-backlight/brightness
-
     chown system system /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_base
     chmod 0660 /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_base
     chown root   system /sys/kernel/debug/binder/transaction_log_enable
     chown root   system /sys/kernel/debug/binder/perf_evalue
-
     chown system /sys/module/mlog/parameters/do_mlog
     chown system /sys/module/mlog/parameters/timer_intval
-
     chown root   radio  /sys/class/leds/lcd-backlight/duty
     chown root   radio  /sys/class/leds/lcd-backlight/div
     chown system system /sys/class/leds/lcd-backlight/trigger
@@ -708,7 +695,6 @@ on boot
     chown radio system /sys/power/tuxonice/do_hibernate
     chmod 0770 /sys/power/tuxonice
     chmod 0220 /sys/power/tuxonice/do_hibernate
-
 
 # Smartbook Handler Framework
     chown system system /sys/power/sb_state
@@ -770,7 +756,6 @@ on boot
     chmod 660 /dev/ttyGS1
     chown system /dev/ttyGS1
 
-
 # BT relayer mode USB VCOM
     chown bluetooth radio /dev/ttyGS2
     chmod 0660 /dev/ttyGS2
@@ -806,8 +791,9 @@ service start_modem /system/bin/md_ctrl 1
     class main
     disabled
     oneshot
+    
 # Define TCP buffer sizes for various networks
-#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+# ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.default 4096,87380,524288,4096,16384,524288
     setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
     setprop net.tcp.buffersize.lte     524288,1048576,2097152,262144,524288,1048576
@@ -818,7 +804,6 @@ service start_modem /system/bin/md_ctrl 1
     setprop net.tcp.buffersize.hspap   4094,87380,1220608,4096,16384,1220608
     setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
     setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
-
     setprop persist.sys.strictmode.disable 1
 
 ## mtk printk uart controller
@@ -843,53 +828,10 @@ service netdiag /system/bin/netdiag
     class main
     socket netdiag stream 0664 root inet
 
-
 service nvram_daemon /system/bin/nvram_daemon
     class main
     user root
     group system
-    oneshot
-
-service atci_service /system/bin/atci_service
-    class core
-    socket atci-service stream 660 radio system
-    socket atci-serv-fw stream 660 radio system
-    user root
-    disabled
-    group radio system
-
-service atcid-daemon-u /system/bin/atcid
-    class main
-    socket adb_atci_socket stream 660 radio system
-    user system
-    group radio system media
-    disabled
-    oneshot
-
-service atcid-daemon-e /system/bin/atcid
-    class core
-    socket adb_atci_socket stream 660 radio system
-    user root
-    group radio system
-    disabled
-    oneshot
-
-on property:persist.service.atci.usermode=1
-    setprop persist.sys.usb.config mass_storage,adb,acm
-
-on property:ro.build.type=eng
-start atci_service
-start atcid-daemon-e
-
-on property:persist.service.atci.autostart=1
-start atci_service
-start atcid-daemon-u
-
-service audio-daemon /system/bin/audiocmdservice_atci
-    class main
-    socket atci-audio stream 660 root system
-    user root
-    disabled
     oneshot
 
 service md_minilog_util /system/bin/md_minilog_util
@@ -907,12 +849,6 @@ service aal /system/bin/aal
     class main
     user system
     group system graphics
-
-# FOTA upgrade
-service rbfota /system/bin/fota1
-    class main
-    disabled
-    oneshot
 
 #
 # MTK Wi-Fi related services (Begin)
@@ -952,6 +888,7 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
+    
 # For WiFi High Speed calibration
 service autokd /system/bin/autokd
     class core
@@ -961,76 +898,6 @@ service autokd /system/bin/autokd
 #
 # MTK Wi-Fi related services (End)
 #
-
-
-service dhcpcd_bt-pan /system/bin/dhcpcd -BK -dd
-    class main
-    user root
-    group net_admin net_raw
-    disabled
-    oneshot
-
-
-
-service dhcpcd_wlan0 /system/bin/dhcpcd -ABKLG -dd
-    class main
-	user root
-	group net_admin net_raw
-    disabled
-    oneshot
-
-service dhcpcd_p2p /system/bin/dhcpcd -BK -dd
-    class main
-	user root
-	group net_admin net_raw
-    disabled
-    oneshot
-
-service iprenew_wlan0 /system/bin/dhcpcd -n
-    class main
-	user dhcp
-	group net_admin net_raw
-    disabled
-    oneshot
-
-service iprenew_p2p /system/bin/dhcpcd -n
-    class main
-	user dhcp
-	group net_admin net_raw
-    disabled
-    oneshot
-
-service dhcp_inform /system/bin/dhcpcd -s -BK -A
-    class main
-    user root
-    group system radio dhcp net_admin net_raw
-    disabled
-    oneshot
-
-service dhcpv6_inform /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cSIP.conf" -Dfi
-    class main
-    user root
-    group system radio dhcp net_admin net_raw
-    disabled
-    oneshot
-
-service dhcp6cDNS_wlan0 /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cDNS.conf" -Df wlan0
-	disabled
-	oneshot
-
-service dhcp6c_wlan0 /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6c.conf" -Df wlan0
-    disabled
-    oneshot
-
-on property:service.dhcp6c_wlan0.enable=0
-    stop dhcp6c_wlan0
-
-on property:service.dhcp6c_wlan0.enable=1
-    start dhcp6c_wlan0
-
-service dhcp6c_PD /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cPD.conf" -Df
-	disabled
-	oneshot
 
 service pppoe_wlan0 /system/bin/launchpppoe
     user root
@@ -1043,6 +910,7 @@ on property:service.pppoe_wlan0.enable=0
 
 on property:service.pppoe_wlan0.enable=1
     start pppoe_wlan0
+    
 # write proc for test sim
     on property:gsm.sim.ril.testsim=0
     write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 0
@@ -1118,11 +986,6 @@ service mtkbt /system/bin/mtkbt
 	group system vpn net_admin inet net_raw net_bt bluetooth net_bt_admin net_bt_stack sdcard_r
 	oneshot
 
-
-#service dpfd /system/bin/dpfd
-#	user root
-#	group system media
-
 #
 #  External Modme control related services
 #
@@ -1130,26 +993,16 @@ service mtkbt /system/bin/mtkbt
 #
 #  Modem related services (Begin)
 #
+
 service pppd_gprs /system/bin/pppd_dt /dev/ttyACM0 debug noauth refuse-eap usepeerdns nodetach
     user root
     group radio cache inet misc
     disabled
     oneshot
 
-##Add by T.Zh for ppp daemon
-#service pppd /system/bin/pppd file /data/misc/ppp/ppp_options
-#    user root
-#    disabled
-#    oneshot
-#
-##
 #
 #  Modem related services (End)
 #
-
-#service agpsdcainit /system/bin/agpscacertinit
-#    class main
-#    oneshot
 
 service agpsd /system/bin/mtk_agpsd
     class main
@@ -1185,11 +1038,6 @@ service extmdlogger /system/bin/extmdlogger
     user shell
     group shell system radio sdcard_rw inet sdcard_r media_rw
 
-service GoogleOtaAgent /system/bin/GoogleOtaBinder
-    class main
-    user system
-    group system
-
 service mdlogger /system/bin/mdlogger
     class main
     user shell
@@ -1211,27 +1059,6 @@ service emdlogger1 /system/bin/emdlogger1
     disabled
     oneshot
 
-service emdlogger2 /system/bin/emdlogger2
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service emdlogger5 /system/bin/emdlogger5
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
-service emdlogger6 /system/bin/emdlogger6
-    class main
-    user shell
-    group system shell radio sdcard_rw inet sdcard_r media_rw
-    disabled
-    oneshot
-
 #
 #sensor service (begin)
 #
@@ -1245,6 +1072,7 @@ service s62xd /system/bin/s62xd
     user compass
     group system
     class main
+    
 service ami304d /system/bin/ami304d
     user system
     group system
@@ -1262,6 +1090,7 @@ service memsicd3416x /system/bin/memsicd3416x
 	 user system
     group system
     class main
+    
 #dixiaobing@wind-mobi.com 20150710 start     
 service memsicd3524x /system/bin/memsicd3524x
      disabled
@@ -1282,7 +1111,6 @@ service akmd8975 /system/bin/akmd8975
     group system
     class main
 
-
 service akmd8963 /system/bin/akmd8963
     disabled
     user system
@@ -1294,6 +1122,7 @@ service akmd09911 /system/bin/akmd09911
     user system
     group system
     class main
+    
 service bmm050d /system/bin/bmm050d
     disabled
     user system
@@ -1305,17 +1134,20 @@ service bmm056d /system/bin/bmm056d
     user system
     group system
     class main
+    
 service mc6420d /system/bin/mc6420d
     disabled
     user system
     group system
     class main
+    
 service qmc5983d /system/bin/qmc5983d
      disabled
 	 user system
     group system
     class main
     # yudengwu@wind-mobi.com begin
+    
 service qmcX983d /system/bin/qmcX983d
      disabled
 	 user system
@@ -1323,11 +1155,13 @@ service qmcX983d /system/bin/qmcX983d
     class main
 	oneshot
     # yudengwu@wind-mobi.com end
+    
 service orientationd /system/bin/orientationd
     disabled
     user system
     group system input
     class main
+    
 service AcdApiDaemon /system/bin/AcdApiDaemon
     disabled
     user system
@@ -1434,10 +1268,6 @@ service backuprestore /system/bin/br_app_data_service
 	socket backuprestore stream 0660 root sdcard_rw
 	user root
 
-#service BGW /system/xbin/BGW
-#	user system
-#	group gps system radio
-#	class main
 service MtkCodecService /system/bin/MtkCodecService
     class main
     user system
@@ -1448,18 +1278,6 @@ service guiext-server /system/bin/guiext-server
     class main
     user system
     group system graphics
-
-# OperaMax Service
-service OperaMaxSystem /system/bin/OperaMaxSystem
-    socket tunman stream 0666 system system
-    class main
-    disabled
-
-on property:persist.service.operamax=1
-    start OperaMaxSystem
-
-on property:persist.service.operamax=0
-    stop OperaMaxSystem
 
 service charger /sbin/healthd -c
     class charger
@@ -1565,3 +1383,36 @@ service boot_init /system/bin/boot_init
 on property:persist.sys.dalvik.vm.lib.2=*
     start boot_init
 # zhouyacheng@wind-mobi.com 2015-6-6 end
+
+# CPU Tweaks By SaMad SegMane
+on property:dev.bootcomplete=1
+    write /sys/module/pwr_mgr/parameters/pm_late_init 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+    write /sys/block/mmcblk0/queue/scheduler row
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/boost
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/target_loads
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/boost
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/target_loads
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1300000
+    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
+    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 800000
+    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 50
+    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 6000
+    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 20000
+    write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 2000
