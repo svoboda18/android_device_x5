@@ -1,4 +1,3 @@
-# (q) Decker [www.decker.su]
 #
 # Android fstab file.
 #<src>           <mnt_point>         <type>    <mnt_flags and options>                 <fs_mgr_flags>
@@ -27,4 +26,4 @@
 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/secro        /secro              emmc       defaults                                                      defaults
 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/seccfg       /seccfg             emmc       defaults                                                      defaults
 
-/dev/block/zram0                                                   none                swap       defaults                                                      zramsize=573741824,zramstreams=3
+/dev/block/zram0                                                   none                swap       defaults                                                      zramsize=573741824,zramstreams=2

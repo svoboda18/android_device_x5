@@ -31,7 +31,6 @@ patch -p1 < ../../device/doogee/x5/patches/frameworks_native.patch
 cd ../..
 cd frameworks/base
 patch -p1 < ../../device/doogee/x5/patches/0011-Fix-Minior-Bugs.patch
-patch -p1 < ../../device/doogee/x5/patches/frameworks_base.patch
 patch -p1 < ../../device/doogee/x5/patches/0007-fix-out-of-memory-gl-crashes.patch
 cd ../..
 cd system/netd

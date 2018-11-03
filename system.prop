@@ -41,17 +41,21 @@ ro.kernel.zio=38,108,105,16
 ro.sf.lcd_density=320
 
 # Performance
-ro.mtk_perf_simple_start_win=1
-ro.mtk_perf_response_time=1
-ro.sys.fw.bg_apps_limit=7
+#ro.mtk_perf_simple_start_win -- Only on mtkaosp.
+#ro.mtk_perf_response_time -- Only on mtkaosp.
+ro.sys.fw.bg_apps_limit=8
 ro.config.low_ram=true
+ro.config.ksm=true
 persist.sys.force_highendgfx=true
+dalvik.vm.jit.codecachesize=0
+ro.config.max_starting_bg=6
+
 
 # Time Zone
-persist.sys.timezone = Europe/Moscow
+persist.sys.timezone=Europe/Moscow
 
 # ClearMotion
 persist.sys.display.clearMotion=0
 
-# FM
+# Enable FM
 fmradio.driver.enable=1
