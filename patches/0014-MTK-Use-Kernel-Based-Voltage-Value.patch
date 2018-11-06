@@ -26,14 +26,14 @@ index e75dc89..00764d2 100644
 +    // Printout old voltage
 +    Log.i("BatteryService", "Current Used Voltage: " + voltage);
 +    // Check if we need to change or not (normaly ,mtk voltage is: 3xxx)
-+      if(voltage <= 3000) {
++      if(voltage <= 000) {
 +         int newvoltage;
 +         // Start work here
 +         try {
 +            File kernelvoltage = new File("/sys/class/power_supply/battery/BatterySenseVoltage");
 +               if(!kernelvoltage.exists() || !kernelvoltage.canRead()) {
 +                 // Keep old one if r/w errors
-+               Slog.e("BatteryService", "Failure in reading mtk battery voltage", e);
++               //android.util.Slog.e("BatteryService", "Failure in reading mtk battery voltage");
 +            return voltage;
 +               }
 +            FileReader readkernelvoltage = new FileReader(kernelvoltage);
@@ -43,13 +43,13 @@ index e75dc89..00764d2 100644
 +            readkernelvoltage.close();
 +         } catch (IOException e) {
 +         	// Keep old one,if r/w errors
-+          Slog.e("BatteryService", "Failure in reading mtk battery voltage", e);
++        //Slog.e("BatteryService", "Failure in reading mtk battery voltage", e);
 +            return voltage;
 +         }
 +           // Log out,the new voltage
-+       Log.i("BatteryService", "Getted from file value= " + newvoltage);
++      //Log.i("BatteryService", "Getted from file value= " + newvoltage);
 +         if(newvoltage >= 3000) {
-+       Log.i("BatteryService", "Voltage after fixing: " + voltage);
++    // Log.i("BatteryService", "Voltage after fixing: " + newvoltage);
 +       // redirect it out
 +       return newvoltage;
 +         }
@@ -61,13 +61,6 @@ index e75dc89..00764d2 100644
      private void logBatteryStatsLocked() {
          IBinder batteryInfoService = ServiceManager.getService(BatteryStats.SERVICE_NAME);
          if (batteryInfoService == null) return;
-@@ -1173,4 +1209,4 @@ public final class BatteryService extends SystemService {
-             updateLedPulse();
-         }
-     }
--}
-\ No newline at end of file
-+}
 -- 
 2.19.1
 

@@ -43,13 +43,11 @@ ro.sf.lcd_density=320
 # Performance
 #ro.mtk_perf_simple_start_win -- Only on mtkaosp.
 #ro.mtk_perf_response_time -- Only on mtkaosp.
-ro.sys.fw.bg_apps_limit=8
-ro.config.low_ram=true
+ro.sys.fw.bg_apps_limit=11
 ro.config.ksm=true
 persist.sys.force_highendgfx=true
 dalvik.vm.jit.codecachesize=0
 ro.config.max_starting_bg=6
-
 
 # Time Zone
 persist.sys.timezone=Europe/Moscow
