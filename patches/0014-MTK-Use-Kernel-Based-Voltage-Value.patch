@@ -1,0 +1,73 @@
+From 55ddf4d973c83f2a2222580f34c91b2de8191d32 Mon Sep 17 00:00:00 2001
+From: SaMad SegMane <32767790+svoboda18@users.noreply.github.com>
+Date: Tue, 6 Nov 2018 18:32:50 +0100
+Subject: [PATCH] MTK: Use Kernel-Based Voltage Value.
+
+* Now , ROM Should Have More Longer Battery Life.
+
+diff --git a/services/core/java/com/android/server/BatteryService.java b/services/core/java/com/android/server/BatteryService.java
+index e75dc89..00764d2 100644
+--- a/services/core/java/com/android/server/BatteryService.java
++++ b/services/core/java/com/android/server/BatteryService.java
+@@ -659,7 +659,7 @@ public final class BatteryService extends SystemService {
+         intent.putExtra(BatteryManager.EXTRA_SCALE, BATTERY_SCALE);
+         intent.putExtra(BatteryManager.EXTRA_ICON_SMALL, icon);
+         intent.putExtra(BatteryManager.EXTRA_PLUGGED, mPlugType);
+-        intent.putExtra(BatteryManager.EXTRA_VOLTAGE, mBatteryProps.batteryVoltage);
++        intent.putExtra(BatteryManager.EXTRA_VOLTAGE, USE_MTK_VOLTAGE(mBatteryProps.batteryVoltage));
+         intent.putExtra(BatteryManager.EXTRA_TEMPERATURE, mBatteryProps.batteryTemperature);
+         intent.putExtra(BatteryManager.EXTRA_TECHNOLOGY, mBatteryProps.batteryTechnology);
+         intent.putExtra(BatteryManager.EXTRA_INVALID_CHARGER, mInvalidCharger);
+@@ -691,6 +691,42 @@ public final class BatteryService extends SystemService {
+         });
+     }
+ 
++        private static int USE_MTK_VOLTAGE(int voltage) {
++    // Printout old voltage
++    Log.i("BatteryService", "Current Used Voltage: " + voltage);
++    // Check if we need to change or not (normaly ,mtk voltage is: 3xxx)
++      if(voltage <= 3000) {
++         int newvoltage;
++         // Start work here
++         try {
++            File kernelvoltage = new File("/sys/class/power_supply/battery/BatterySenseVoltage");
++               if(!kernelvoltage.exists() || !kernelvoltage.canRead()) {
++                 // Keep old one if r/w errors
++               Slog.e("BatteryService", "Failure in reading mtk battery voltage", e);
++            return voltage;
++               }
++            FileReader readkernelvoltage = new FileReader(kernelvoltage);
++            BufferedReader getkernelvoltage = new BufferedReader(readkernelvoltage);
++            newvoltage = Integer.parseInt(getkernelvoltage.readLine());
++            getkernelvoltage.close();
++            readkernelvoltage.close();
++         } catch (IOException e) {
++         	// Keep old one,if r/w errors
++          Slog.e("BatteryService", "Failure in reading mtk battery voltage", e);
++            return voltage;
++         }
++           // Log out,the new voltage
++       Log.i("BatteryService", "Getted from file value= " + newvoltage);
++         if(newvoltage >= 3000) {
++       Log.i("BatteryService", "Voltage after fixing: " + voltage);
++       // redirect it out
++       return newvoltage;
++         }
++      }
++      // No Changes We Did.
++      return voltage;
++   }
++    
+     private void logBatteryStatsLocked() {
+         IBinder batteryInfoService = ServiceManager.getService(BatteryStats.SERVICE_NAME);
+         if (batteryInfoService == null) return;
+@@ -1173,4 +1209,4 @@ public final class BatteryService extends SystemService {
+             updateLedPulse();
+         }
+     }
+-}
+\ No newline at end of file
++}
+-- 
+2.19.1
+
