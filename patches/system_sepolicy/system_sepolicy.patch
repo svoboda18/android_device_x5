@@ -8,10 +8,11 @@ Subject: [PATCH] system_sepolicy
  domain.te         | 2 +-
  isolated_app.te   | 4 ++--
  mediadrmserver.te | 6 +++---
+ mediaserver.te    | 6 +++---
  priv_app.te       | 2 +-
  shell.te          | 2 +-
  untrusted_app.te  | 4 ++--
- 7 files changed, 12 insertions(+), 12 deletions(-)
+ 8 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/app.te b/app.te
 index ca0cba3..ab0d921 100644
@@ -77,6 +78,27 @@ index d9368ad..3ef8830 100644
  # do not allow privileged socket ioctl commands
 -neverallowxperm mediadrmserver domain:{ rawip_socket tcp_socket udp_socket } ioctl priv_sock_ioctls;
 +#neverallowxperm mediadrmserver domain:{ rawip_socket tcp_socket udp_socket } ioctl priv_sock_ioctls;
+diff --git a/mediaserver.te b/mediaserver.te
+index 661bdee..32e4951 100644
+--- a/mediaserver.te
++++ b/mediaserver.te
+@@ -117,8 +117,8 @@ allow mediaserver drmserver:drmservice {
+ };
+ 
+ # only allow unprivileged socket ioctl commands
+-allowxperm mediaserver self:{ rawip_socket tcp_socket udp_socket }
+-  ioctl { unpriv_sock_ioctls unpriv_tty_ioctls };
++#allowxperm mediaserver self:{ rawip_socket tcp_socket udp_socket }
++#  ioctl { unpriv_sock_ioctls unpriv_tty_ioctls };
+ 
+ # Access to /data/media.
+ # This should be removed if sdcardfs is modified to alter the secontext for its
+@@ -138,4 +138,4 @@ allow mediaserver preloads_data_file:file { getattr read ioctl };
+ neverallow mediaserver { file_type fs_type }:file execute_no_trans;
+ 
+ # do not allow privileged socket ioctl commands
+-neverallowxperm mediaserver domain:{ rawip_socket tcp_socket udp_socket } ioctl priv_sock_ioctls;
++#neverallowxperm mediaserver domain:{ rawip_socket tcp_socket udp_socket } ioctl priv_sock_ioctls;
 diff --git a/priv_app.te b/priv_app.te
 index 85516a6..aab4b20 100644
 --- a/priv_app.te

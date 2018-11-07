@@ -22,9 +22,9 @@ persist.debug.xlog.enable=1 \
 persist.sys.display.clearMotion=0 
 
 # The gps config appropriate for this device
-$(call inherit-product, device/common/gps/gps_us_supl.mk)
+$(call inherit-product-if-exists, device/common/gps/gps_us_supl.mk)
 
-$(call inherit-product-if-exists, vendor/doogee/x5/x5-vendor.mk)
+$(call inherit-product, vendor/doogee/x5/x5-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/doogee/x5/overlay
 PRODUCT_PACKAGE_OVERLAYS += device/doogee/x5/overlay # enable this to be able overlay a default wallpaper
