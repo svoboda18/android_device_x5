@@ -23,34 +23,27 @@ index e75dc89..00764d2 100644
      }
  
 +        private static int USE_MTK_VOLTAGE(int voltage) {
-+    // Printout old voltage
-+    Log.i("BatteryService", "Current Used Voltage: " + voltage);
-+    // Check if we need to change or not (normaly ,mtk voltage is: 3xxx)
-+      if(voltage <= 000) {
++  // Check if we need to change or not (normaly ,mtk voltage is: 3xxx)
++      if(voltage <= 1000) {
 +         int newvoltage;
 +         // Start work here
 +         try {
 +            File kernelvoltage = new File("/sys/class/power_supply/battery/BatterySenseVoltage");
-+               if(!kernelvoltage.exists() || !kernelvoltage.canRead()) {
-+                 // Keep old one if r/w errors
-+               //android.util.Slog.e("BatteryService", "Failure in reading mtk battery voltage");
++      if(!kernelvoltage.exists() || !kernelvoltage.canRead()) {
++         // Never Go Here
 +            return voltage;
 +               }
-+            FileReader readkernelvoltage = new FileReader(kernelvoltage);
-+            BufferedReader getkernelvoltage = new BufferedReader(readkernelvoltage);
-+            newvoltage = Integer.parseInt(getkernelvoltage.readLine());
-+            getkernelvoltage.close();
-+            readkernelvoltage.close();
++          FileReader readkernelvoltage = new FileReader(kernelvoltage);
++          BufferedReader getkernelvoltage = new BufferedReader(readkernelvoltage);
++          newvoltage = Integer.parseInt(getkernelvoltage.readLine());
++          getkernelvoltage.close();
++          readkernelvoltage.close();
 +         } catch (IOException e) {
-+         	// Keep old one,if r/w errors
-+        //Slog.e("BatteryService", "Failure in reading mtk battery voltage", e);
++        // Never Go Here
 +            return voltage;
 +         }
-+           // Log out,the new voltage
-+      //Log.i("BatteryService", "Getted from file value= " + newvoltage);
 +         if(newvoltage >= 3000) {
-+    // Log.i("BatteryService", "Voltage after fixing: " + newvoltage);
-+       // redirect it out
++       // redirect new voltage out
 +       return newvoltage;
 +         }
 +      }
