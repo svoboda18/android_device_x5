@@ -23,27 +23,34 @@ index e75dc89..00764d2 100644
      }
  
 +        private static int USE_MTK_VOLTAGE(int voltage) {
-+  // Check if we need to change or not (normaly ,mtk voltage is: 3xxx)
-+      if(voltage <= 1000) {
++     // Welcome To USE_MTK_VOLTAGE Function
++     // Start chek
++     // Check if we need to change or not (normaly ,mtk voltage is: 3xxx)
++      if(voltage <= 3000) {
 +         int newvoltage;
 +         // Start work here
 +         try {
 +            File kernelvoltage = new File("/sys/class/power_supply/battery/BatterySenseVoltage");
-+      if(!kernelvoltage.exists() || !kernelvoltage.canRead()) {
-+         // Never Go Here
++               if(!kernelvoltage.exists() || !kernelvoltage.canRead()) {
++                 // Keep old one if r/w errors
++                // Will never go here
 +            return voltage;
 +               }
-+          FileReader readkernelvoltage = new FileReader(kernelvoltage);
-+          BufferedReader getkernelvoltage = new BufferedReader(readkernelvoltage);
-+          newvoltage = Integer.parseInt(getkernelvoltage.readLine());
-+          getkernelvoltage.close();
-+          readkernelvoltage.close();
++            FileReader readkernelvoltage = new FileReader(kernelvoltage);
++            BufferedReader getkernelvoltage = new BufferedReader(readkernelvoltage);
++            newvoltage = Integer.parseInt(getkernelvoltage.readLine());
++            getkernelvoltage.close();
++            readkernelvoltage.close();
 +         } catch (IOException e) {
-+        // Never Go Here
++         	// Keep old one,if r/w errors
++            // Will never go here
 +            return voltage;
 +         }
++           // move to check
++          // Check if we changed somwthing or not
 +         if(newvoltage >= 3000) {
-+       // redirect new voltage out
++       // Now , use our mtk voltage
++       // redirect it out
 +       return newvoltage;
 +         }
 +      }

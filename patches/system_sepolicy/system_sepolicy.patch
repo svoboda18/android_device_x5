@@ -1,18 +1,7 @@
 From cac8d95915983ba549c63fa45515c7aa8473954d Mon Sep 17 00:00:00 2001
 From: podkopaew <podkopaew@list.ru>
 Date: Mon, 30 Oct 2017 18:21:08 +0000
-Subject: [PATCH] system_sepolicy
-
----
- app.te            | 4 ++--
- domain.te         | 2 +-
- isolated_app.te   | 4 ++--
- mediadrmserver.te | 6 +++---
- mediaserver.te    | 6 +++---
- priv_app.te       | 2 +-
- shell.te          | 2 +-
- untrusted_app.te  | 4 ++--
- 8 files changed, 15 insertions(+), 15 deletions(-)
+Subject: [PATCH] Revert to 29
 
 diff --git a/app.te b/app.te
 index ca0cba3..ab0d921 100644
@@ -137,5 +126,3 @@ index 1089e61..8941a47 100644
  neverallow untrusted_app *:{
    socket netlink_socket packet_socket key_socket appletalk_socket
    netlink_firewall_socket netlink_tcpdiag_socket netlink_nflog_socket
--- 
-1.9.1
