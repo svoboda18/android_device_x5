@@ -1,4 +1,5 @@
 From 8c7b194f19f0e21715b8ea315622583edaf5b79c Mon Sep 17 00:00:00 2001
+
 From: adi766 <adityakumarteli7846@gmail.com>
 Date: Sat, 23 Sep 2017 07:37:38 +0000
 Subject: [PATCH] Mediatek: Correctly report battery voltage & Fixes
@@ -24,39 +25,5 @@ index d2088eefb..947e83efd 100644
  
      if (!mHealthdConfig->batteryCurrentNowPath.isEmpty())
          props.batteryCurrent = getIntField(mHealthdConfig->batteryCurrentNowPath) / 1000;
-diff --git a/rootdir/init.rc b/rootdir/init.rc
-index 0de027bf1..36b25216b 100644
---- a/rootdir/init.rc
-+++ b/rootdir/init.rc
-@@ -217,6 +217,7 @@ on init
- 
-     # Create location for fs_mgr to store abbreviated output from filesystem
-     # checker programs.
-+
-     mkdir /dev/fscklogs 0770 root system
- 
-     # pstore/ramoops previous console log
-@@ -658,6 +659,23 @@ service healthd /sbin/healthd
-     seclabel u:r:healthd:s0
-     group root system wakelock
- 
-+service surfaceflinger /system/bin/surfaceflinger
-+    class core
-+    user root
-+    group graphics drmrpc
-+    onrestart restart zygote
-+
-+service drm /system/bin/drmserver
-+    class main
-+    user drm
-+    group drm system inet drmrpc
-+
-+service media /system/bin/mediaserver
-+    class main
-+    user root
-+    group audio camera inet net_bt net_bt_admin net_bw_acct drmrpc mediadrm qcom_diag
-+    ioprio rt 4
-+
- service console /system/bin/sh
-     class core
-     console
+--
+1.9
