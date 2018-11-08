@@ -1,66 +1,50 @@
-From 55ddf4d973c83f2a2222580f34c91b2de8191d32 Mon Sep 17 00:00:00 2001
-From: SaMad SegMane <32767790+svoboda18@users.noreply.github.com>
-Date: Tue, 6 Nov 2018 18:32:50 +0100
-Subject: [PATCH] MTK: Use Kernel-Based Voltage Value.
+From 2d1bc41b6413c668a9edff78224b11e40ecea4e5 Mon Sep 17 00:00:00 2001
+From: adi766 <adityakumarteli7846@gmail.com>
+Date: Sat, 23 Sep 2017 16:48:05 +0000
+Subject: [PATCH] Fix hwui
 
-* Now , ROM Should Have More Longer Battery Life.
+---
+ libs/hwui/Caches.cpp                  | 13 +++----------
+ libs/hwui/renderthread/EglManager.cpp |  5 +----
+ 2 files changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/services/core/java/com/android/server/BatteryService.java b/services/core/java/com/android/server/BatteryService.java
-index e75dc89..00764d2 100644
---- a/services/core/java/com/android/server/BatteryService.java
-+++ b/services/core/java/com/android/server/BatteryService.java
-@@ -659,7 +659,7 @@ public final class BatteryService extends SystemService {
-         intent.putExtra(BatteryManager.EXTRA_SCALE, BATTERY_SCALE);
-         intent.putExtra(BatteryManager.EXTRA_ICON_SMALL, icon);
-         intent.putExtra(BatteryManager.EXTRA_PLUGGED, mPlugType);
--        intent.putExtra(BatteryManager.EXTRA_VOLTAGE, mBatteryProps.batteryVoltage);
-+        intent.putExtra(BatteryManager.EXTRA_VOLTAGE, USE_MTK_VOLTAGE(mBatteryProps.batteryVoltage));
-         intent.putExtra(BatteryManager.EXTRA_TEMPERATURE, mBatteryProps.batteryTemperature);
-         intent.putExtra(BatteryManager.EXTRA_TECHNOLOGY, mBatteryProps.batteryTechnology);
-         intent.putExtra(BatteryManager.EXTRA_INVALID_CHARGER, mInvalidCharger);
-@@ -691,6 +691,42 @@ public final class BatteryService extends SystemService {
-         });
+diff --git a/libs/hwui/Caches.cpp b/libs/hwui/Caches.cpp
+index a8ced9b2597b..f263bdacd415 100644
+--- a/libs/hwui/Caches.cpp
++++ b/libs/hwui/Caches.cpp
+@@ -83,16 +83,9 @@ bool Caches::init() {
+ }
+ 
+ void Caches::initExtensions() {
+-    if (mExtensions.hasDebugMarker()) {
+-        eventMark = glInsertEventMarkerEXT;
+-
+-        startMark = glPushGroupMarkerEXT;
+-        endMark = glPopGroupMarkerEXT;
+-    } else {
+-        eventMark = eventMarkNull;
+-        startMark = startMarkNull;
+-        endMark = endMarkNull;
+-    }
++    eventMark = eventMarkNull;
++    startMark = startMarkNull;
++    endMark = endMarkNull;
+ }
+ 
+ void Caches::initConstraints() {
+diff --git a/libs/hwui/renderthread/EglManager.cpp b/libs/hwui/renderthread/EglManager.cpp
+index ac6a28fe6289..b476ce5bc8c5 100644
+--- a/libs/hwui/renderthread/EglManager.cpp
++++ b/libs/hwui/renderthread/EglManager.cpp
+@@ -335,10 +335,7 @@ bool EglManager::swapBuffers(const Frame& frame, const SkRect& screenDirty) {
+         fence();
      }
  
-+        private static int USE_MTK_VOLTAGE(int voltage) {
-+     // Welcome To USE_MTK_VOLTAGE Function
-+     // Start chek
-+     // Check if we need to change or not (normaly ,mtk voltage is: 3xxx)
-+      if(voltage <= 3000) {
-+         int newvoltage;
-+         // Start work here
-+         try {
-+            File kernelvoltage = new File("/sys/class/power_supply/battery/BatterySenseVoltage");
-+               if(!kernelvoltage.exists() || !kernelvoltage.canRead()) {
-+                 // Keep old one if r/w errors
-+                // Will never go here
-+            return voltage;
-+               }
-+            FileReader readkernelvoltage = new FileReader(kernelvoltage);
-+            BufferedReader getkernelvoltage = new BufferedReader(readkernelvoltage);
-+            newvoltage = Integer.parseInt(getkernelvoltage.readLine());
-+            getkernelvoltage.close();
-+            readkernelvoltage.close();
-+         } catch (IOException e) {
-+         	// Keep old one,if r/w errors
-+            // Will never go here
-+            return voltage;
-+         }
-+           // move to check
-+          // Check if we changed somwthing or not
-+         if(newvoltage >= 3000) {
-+       // Now , use our mtk voltage
-+       // redirect it out
-+       return newvoltage;
-+         }
-+      }
-+      // No Changes We Did.
-+      return voltage;
-+   }
-+    
-     private void logBatteryStatsLocked() {
-         IBinder batteryInfoService = ServiceManager.getService(BatteryStats.SERVICE_NAME);
-         if (batteryInfoService == null) return;
--- 
-2.19.1
-
+-    EGLint rects[4];
+-    frame.map(screenDirty, rects);
+-    eglSwapBuffersWithDamageKHR(mEglDisplay, frame.mSurface, rects,
+-            screenDirty.isEmpty() ? 0 : 1);
++    eglSwapBuffers(mEglDisplay, frame.mSurface);
+ 
+     EGLint err = eglGetError();
+     if (CC_LIKELY(err == EGL_SUCCESS)) {
