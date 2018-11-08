@@ -6,7 +6,7 @@ patch -p1 < ../../device/doogee/x5/patches/system_core/system_core-4.patch
 patch -p1 < ../../device/doogee/x5/patches/system_core/system_core-3.patch
 patch -p1 < ../../device/doogee/x5/patches/system_core/system_core-2.patch
 patch -p1 < ../../device/doogee/x5/patches/system_core/system_core-5.patch
-patch -p1 < ../../device/doogee/x5/patches/system_core/system_core-6.patch
+#patch -p1 < ../../device/doogee/x5/patches/system_core/system_core-6.patch
 cd ../..
 cd bionic
 patch -p1 < ../device/doogee/x5/patches/bionic/bionic.patch
@@ -21,8 +21,8 @@ cd frameworks/native
 patch -p1 < ../../device/doogee/x5/patches/frameworks_native/frameworks_native.patch
 cd ../..
 cd frameworks/base
-patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base.patch
-patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base-2.patch
+#patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base.patch
+#patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base-2.patch
 cd ../..
 cd system/netd
 patch -p1 < ../../device/doogee/x5/patches/system_netd/system_netd.patch

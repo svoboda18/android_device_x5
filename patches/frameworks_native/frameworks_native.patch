@@ -57,26 +57,6 @@ index b431bd52aa1..befd640457d 100644
  };
  
  }; // namespace android
-diff --git a/include/ui/GraphicBufferMapper.h b/include/ui/GraphicBufferMapper.h
-index 99006248275..52eba1ce7f9 100644
---- a/include/ui/GraphicBufferMapper.h
-+++ b/include/ui/GraphicBufferMapper.h
-@@ -72,6 +72,15 @@ class GraphicBufferMapper : public Singleton<GraphicBufferMapper>
-     std::unique_ptr<Gralloc1::Device> mDevice;
- };
- 
-+#ifdef MTK_HARDWARE
-+extern "C" {
-+
-+    status_t _ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv(
-+            buffer_handle_t handle, int usage, const Rect& bounds, void** vaddr);
-+
-+}
-+#endif
-+
- // ---------------------------------------------------------------------------
- 
- }; // namespace android
 diff --git a/include/ui/mediatek/IDumpTunnel.h b/include/ui/mediatek/IDumpTunnel.h
 new file mode 100644
 index 00000000000..8f9b6636b4c
@@ -234,39 +214,6 @@ index d8cabad9fd1..f2cd4c22f07 100644
  ifneq ($(BOARD_FRAMEBUFFER_FORCE_FORMAT),)
  LOCAL_CFLAGS += -DFRAMEBUFFER_FORCE_FORMAT=$(BOARD_FRAMEBUFFER_FORCE_FORMAT)
  endif
-diff --git a/libs/ui/GraphicBufferMapper.cpp b/libs/ui/GraphicBufferMapper.cpp
-index 0580e160f61..0b871b95b16 100644
---- a/libs/ui/GraphicBufferMapper.cpp
-+++ b/libs/ui/GraphicBufferMapper.cpp
-@@ -77,6 +77,28 @@ status_t GraphicBufferMapper::unregisterBuffer(buffer_handle_t handle)
-     return outRect;
- }
- 
-+#ifdef MTK_HARDWARE
-+extern "C" {
-+
-+extern status_t _ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv(buffer_handle_t, uint32_t, const Rect&, void**);
-+extern status_t _ZN7android19GraphicBufferMapper9lockYCbCrEPK13native_handlejRKNS_4RectEP13android_ycbcr(buffer_handle_t, uint32_t, const Rect&, android_ycbcr *);
-+
-+
-+status_t _ZN7android19GraphicBufferMapper4lockEPK13native_handleiRKNS_4RectEPPv(buffer_handle_t handle,
-+        int usage, const Rect& bounds, void** vaddr)
-+{
-+    return _ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPv(handle, static_cast<uint32_t>(usage), bounds, vaddr);
-+}
-+
-+
-+status_t _ZN7android19GraphicBufferMapper9lockYCbCrEPK13native_handleiRKNS_4RectEP13android_ycbcr(buffer_handle_t handle,
-+        int usage, const Rect& bounds, android_ycbcr *ycbcr)
-+{
-+    return _ZN7android19GraphicBufferMapper9lockYCbCrEPK13native_handlejRKNS_4RectEP13android_ycbcr(handle, static_cast<uint32_t>(usage), bounds, ycbcr);
-+}
-+}
-+#endif
-+
- status_t GraphicBufferMapper::lock(buffer_handle_t handle, uint32_t usage,
-         const Rect& bounds, void** vaddr)
- {
 diff --git a/libs/ui/mediatek/Fence.cpp b/libs/ui/mediatek/Fence.cpp
 new file mode 100644
 index 00000000000..c604cd032e2
