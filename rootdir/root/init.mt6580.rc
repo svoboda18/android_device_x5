@@ -1,5 +1,6 @@
 import init.mt6580.usb.rc
 import init.project.rc
+import init.trace.rc
 import init.modem.rc
 
 on early-init
@@ -446,10 +447,7 @@ on post-fs-data
 	
     #create directory /data/subt for subtitle
     mkdir /mnt/subt/ 0770 media media
-    
-    # Battery Voltage
-    chmod 0666 /sys/class/power_supply/battery/BatterySenseVoltage
-    
+
 # -----------------------
 # End of adding by MTK drivers
 # -----------------------
@@ -646,13 +644,29 @@ service nvram_daemon /system/bin/nvram_daemon
     group system
     oneshot
 
+service surfaceflinger /system/bin/surfaceflinger
+    class core
+    user root
+    group graphics drmrpc
+    onrestart restart zygote
+
+service drm /system/bin/drmserver
+    class main
+    user drm
+    group drm system inet drmrpc
+
+service media /system/bin/mediaserver
+    class main
+    user root
+    group audio camera inet net_bt net_bt_admin net_bw_acct drmrpc mediadrm qcom_diag
+    ioprio rt 4
+
 service pq /system/bin/pq
     class main
     user system
     group system graphics
     oneshot
 
-# Charger mode
 service charger /sbin/healthd -c
     class charger
     critical
@@ -661,6 +675,7 @@ service charger /sbin/healthd -c
 #
 # MTK Wi-Fi related services (Begin)
 #
+
 service wifi2agps /system/bin/wifi2agps
     class main
     user wifi
@@ -701,9 +716,81 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
+service autokd /system/bin/autokd
+    class core
+    user system
+    group system
+
 #
 # MTK Wi-Fi related services (End)
 #
+
+service dhcpcd_bt-pan /system/bin/dhcpcd -BK -dd
+    class main
+    user root
+    group net_admin net_raw
+    disabled
+    oneshot
+
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABKLG -dd
+    class main
+    user root
+    group net_admin net_raw
+    disabled
+    oneshot
+
+service dhcpcd_p2p /system/bin/dhcpcd -BK -dd
+    class main
+    user root
+    group net_admin net_raw
+    disabled
+    oneshot
+
+service iprenew_wlan0 /system/bin/dhcpcd -n
+    class main
+    user dhcp
+    group net_admin net_raw
+    disabled
+    oneshot
+
+service iprenew_p2p /system/bin/dhcpcd -n
+    class main
+    user dhcp
+    group net_admin net_raw
+    disabled
+    oneshot
+
+service dhcp_inform /system/bin/dhcpcd -s -BK -A
+    class main
+    user root
+    group system radio dhcp net_admin net_raw
+    disabled
+    oneshot
+
+service dhcpv6_inform /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cSIP.conf" -Dfi
+    class main
+    user root
+    group system radio dhcp net_admin net_raw
+    disabled
+    oneshot
+
+service dhcp6cDNS_wlan0 /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cDNS.conf" -Df wlan0
+    disabled
+    oneshot
+
+service dhcp6c_wlan0 /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6c.conf" -Df wlan0
+    disabled
+    oneshot
+
+on property:service.dhcp6c_wlan0.enable=0
+    stop dhcp6c_wlan0
+
+on property:service.dhcp6c_wlan0.enable=1
+    start dhcp6c_wlan0
+
+service dhcp6c_PD /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cPD.conf" -Df
+    disabled
+    oneshot
 
 service pppoe_wlan0 /system/bin/launchpppoe
     user root
@@ -783,11 +870,11 @@ service bluetoothd /system/bin/bluetoothd -n
 
 service mtkbt /system/bin/mtkbt
     class late_start
-	socket bt.int.adp dgram 660 bluetooth net_bt
-	socket bt.a2dp.stream dgram 660 bluetooth net_bt
-	user bluetooth
-	group system vpn net_admin inet net_raw net_bt bluetooth net_bt_admin net_bt_stack sdcard_r
-	oneshot
+    socket bt.int.adp dgram 660 bluetooth net_bt
+    socket bt.a2dp.stream dgram 660 bluetooth net_bt
+    user bluetooth
+    group system vpn net_admin inet net_raw net_bt bluetooth net_bt_admin net_bt_stack sdcard_r
+    oneshot
 
 service pppd_gprs /system/bin/pppd_dt /dev/ttyACM0 debug noauth refuse-eap usepeerdns nodetach
     user root
@@ -842,8 +929,8 @@ service memsicp /system/bin/memsicp
     class main
 
 service memsicd3416x /system/bin/memsicd3416x
-     disabled
-	 user system
+    disabled
+    user system
     group system
     class main
 

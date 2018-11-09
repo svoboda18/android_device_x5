@@ -1,12 +1,7 @@
 ## Permissions to allow system-wide tracing to the kernel trace buffer.
-## ibrahim1973 Fix "E/memtrack_graphic
+## ibrahim1973 Fix E/memtrack_graphic
+
 on early-boot
-
-# Allow writing to the kernel trace log.
-    mount debugfs debugfs /sys/kernel/debug
-    chmod 0755 /sys/kernel/debug
-    chmod 0222 /sys/kernel/debug/tracing/trace_marker
-
 # Allow the shell group to enable (some) kernel tracing.
     chown root shell /sys/kernel/debug/tracing/trace_clock
     chown root shell /sys/kernel/debug/tracing/buffer_size_kb
