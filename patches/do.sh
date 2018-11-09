@@ -25,7 +25,7 @@ patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base.patch
 patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base-2.patch
 cd ../..
 cd frameworks/opt/telephony
-patch -p1 < ../../../device/doogee/x5/patches/frameworks_opt/telephony/frameworks_opt_telephony.patch
+patch -p1 < ../../../device/doogee/x5/patches/frameworks_opt_telephony/frameworks_opt_telephony.patch
 cd ../../..
 cd system/netd
 patch -p1 < ../../device/doogee/x5/patches/system_netd/system_netd.patch
