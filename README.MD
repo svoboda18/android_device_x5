@@ -42,7 +42,18 @@
 - Pervent Log From Spamming Audio Blobs.
 - Fixed libhwui Thats Makes Apps Crash.
 - Corrected wpa_supplicant_8 (Fix Cant Connect Hidden SSID).
+- Fixed Battery Voltages.
+- Stabilized RIL.
+- Cleans boot.img For Nougat.
 
+# For LineageOMS
+Tow Conditions , In Order To Get Good Results:
+- Most Be On Pure LineageOS Source ( Recently Synced & Un-Patched/Locally Changed. ).
+- OMS Patches Must Be On: `` $REPO/device/*/*/patches/oms
+
+Start Patching, By:
+- `` cd device/doogee/x5/patches/oms ``
+- `` bash do.sh ``
 
 # Credits:
 | People Who Helped/Contributed : |
