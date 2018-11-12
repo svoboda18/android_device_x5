@@ -1,7 +1,7 @@
-# Lineage OS 14.1
+Lineage OS 14.1
 =================
 - This Trees Are Used For Building LineageOS/AOSP Based Roms.
-- For: # DOOGEE X5
+- For: `` DOOGEE X5 ``
 
 # X5 Speces:
 - MT6580 Chipset
