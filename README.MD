@@ -49,7 +49,7 @@
 # For LineageOMS
 Tow Conditions , In Order To Get Good Results:
 - Most Be On Pure LineageOS Source ( Recently Synced & Un-Patched/Locally Changed. ).
-- OMS Patches Must Be On: `` $REPO/device/*/*/patches/oms
+- OMS Patches Must Be On: `` $REPO/device/*/*/patches/oms ``
 
 Start Patching, By:
 - `` cd device/doogee/x5/patches/oms ``
@@ -59,5 +59,6 @@ Start Patching, By:
 | People Who Helped/Contributed : |
 | :-------|
 | pedropereira22 | 
+
 | seluce |
 | andrey167 |
