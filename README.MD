@@ -1,7 +1,9 @@
-# Device Tree for Building Lineage OS 14.1
-- Suitable Also For AOSP.
+# Lineage OS 14.1
+=================
+- This Trees Are Used For Building LineageOS/AOSP Based Roms.
+- For: # DOOGEE X5
 
-# Target Device: DOOGEE X5
+# X5 Speces:
 - MT6580 Chipset
 - Marshmallow 6.0 (3.18.19 Kernel)
 - 5,0" 1280x720 display
@@ -48,7 +50,7 @@
 
 # For LineageOMS
 Tow Conditions , In Order To Get Good Results:
-- Most Be On Pure LineageOS Source ( Recently Synced & Un-Patched/Locally Changed. ).
+- Most Be On Pure LineageOS Source. ( Recently Synced & Un-Patched/Locally Changed. ).
 - OMS Patches Must Be On: `` $REPO/device/*/*/patches/oms ``
 
 Start Patching, By:
@@ -58,7 +60,6 @@ Start Patching, By:
 # Credits:
 | People Who Helped/Contributed : |
 | :-------|
-| pedropereira22 | 
-
+| pedropereira22 |
 | seluce |
 | andrey167 |
