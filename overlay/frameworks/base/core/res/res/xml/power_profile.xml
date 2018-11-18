@@ -37,7 +37,7 @@
         <value>42.1</value>
         <value>30.4</value>
 </array>
-    <item name="battery.capacity">4150</item>
+    <item name="battery.capacity">2400</item>
     <array name="wifi.batchedscan">
         <value>.2</value>
         <value>2</value>
