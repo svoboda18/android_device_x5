@@ -5,7 +5,7 @@ patch -p1 < ../../../device/doogee/x5/patches/miravision-settings.patch
 patch -p1 < ../../../device/doogee/x5/patches/dev-info.patch
 git clean -f -d
 cd ../../..
-patch -p1 < ../../../device/doogee/x5/patches/navbar-enable-settings.patch
+patch -p1 < device/doogee/x5/patches/navbar-enable-settings.patch
 cd system/core
 patch -p1 < ../../device/doogee/x5/patches/linetutils.patch
 patch -p1 < ../../device/doogee/x5/patches/system-core.patch
@@ -17,6 +17,7 @@ cd ..
 cd frameworks/av
 patch -p1 < ../../device/doogee/x5/patches/framworks-av.patch
 cd ../..
+#
 patch -p1 < device/doogee/x5/patches/kpd-keys.patch
 cd external/wpa_supplicant_8
 patch -p1 < ../../device/doogee/x5/patches/nvram-fix.patch

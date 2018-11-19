@@ -71,7 +71,7 @@ on charger
 on fs
     write /proc/bootprof "INIT:Mount_START"
     mount_all /fstab.mt6580
-	swapon_all /fstab.mt6580
+    swapon_all /fstab.mt6580
     exec /system/bin/tune2fs -O has_journal -u 10010 -r 4096 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/userdata
     write /proc/bootprof "INIT:Mount_END"
 
@@ -597,7 +597,7 @@ on post-fs-data
     chown system camera /dev/kd_camera_flashlight
     chown system camera /dev/kd_camera_hw_bus2
     chown system camera /dev/FM50AF
-    chown system camera /dev/DW9718AF
+    chown system camera /dev/DW9714AF
     chown system camera /dev/CAM_CAL_DRV
 
     #MATV

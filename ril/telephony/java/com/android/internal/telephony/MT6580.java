@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The CyanogenMod Project
+Copyright (C) 2016 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ import android.telephony.TelephonyManager;
 
 import com.android.internal.telephony.MtkEccList;
 
-
 /**
  * Custom wrapper for MTK requests
  *
@@ -63,9 +62,8 @@ public class MT6580 extends RIL implements CommandsInterface {
     //private Context mContext;
     private TelephonyManager mTelephonyManager;
     private MtkEccList mEccList;
-    
 
-   public MT6580(Context context, int preferredNetworkType, int cdmaSubscription) {
+    public MT6580(Context context, int preferredNetworkType, int cdmaSubscription) {
         super(context, preferredNetworkType, cdmaSubscription, null);
         //mContext = context;
         Rlog.i("MT6580", "Ctor1: context is " + mContext);
@@ -100,7 +98,7 @@ public class MT6580 extends RIL implements CommandsInterface {
 
     @Override
     protected void
-    processUnsolicited (Parcel p, int type) {
+    processUnsolicited (Parcel p) {
         Object ret;
         int dataPosition = p.dataPosition(); // save off position within the Parcel
         int response = p.readInt();
@@ -116,7 +114,7 @@ public class MT6580 extends RIL implements CommandsInterface {
                 // Rewind the Parcel
                 p.setDataPosition(dataPosition);
                 // Forward responses that we are not overriding to the super class
-                super.processUnsolicited(p, type);
+                super.processUnsolicited(p);
                 return;
         }
         switch(response) {
@@ -250,7 +248,7 @@ public class MT6580 extends RIL implements CommandsInterface {
     responseSetAttachApn(Parcel p) {
         // The stack refuses to attach to LTE unless an IA APN was set, and
         // will loop until it happens. Set an empty one to unblock.
-       setInitialAttachApn("","",0,"","",null);        
+        setInitialAttachApn("","",0,"","",null);
         return null;
     }
 
@@ -276,8 +274,8 @@ public class MT6580 extends RIL implements CommandsInterface {
 
     @Override
     public void
-    setupDataCall(int radioTechnology, int profile, String apn,
-            String user, String password, int authType, String protocol,
+    setupDataCall(String radioTechnology, String profile, String apn,
+            String user, String password, String authType, String protocol,
             Message result) {
         int interfaceId=0;
         RILRequest rr
@@ -285,12 +283,12 @@ public class MT6580 extends RIL implements CommandsInterface {
 
         rr.mParcel.writeInt(8); //bumped by one
 
-        rr.mParcel.writeString(Integer.toString(radioTechnology + 2));
-        rr.mParcel.writeString(Integer.toString(profile));
+        rr.mParcel.writeString(Integer.toString(Integer.parseInt(radioTechnology) + 2));
+        rr.mParcel.writeString(profile);
         rr.mParcel.writeString(apn);
         rr.mParcel.writeString(user);
         rr.mParcel.writeString(password);
-        rr.mParcel.writeString(Integer.toString(authType));
+        rr.mParcel.writeString(authType);
         rr.mParcel.writeString(protocol);
 
         /* Find the first available interfaceId */
@@ -356,6 +354,7 @@ public class MT6580 extends RIL implements CommandsInterface {
             if (RILJ_LOGD) riljLog(rr.serialString() + "> " + localRequestToString(rr.mRequest));
 
             send(rr);
+
         } else {
             super.dial(address, clirMode, uusInfo, result);
         }
@@ -392,11 +391,11 @@ public class MT6580 extends RIL implements CommandsInterface {
             super.setRadioPower(on, result);
         }
     }
-        
+
     // Solicited request handling
     @Override
     protected RILRequest
-    processSolicited (Parcel p, int type) {
+    processSolicited (Parcel p) {
         int serial, error;
         int dataPosition = p.dataPosition(); // save off position within the Parcel
         serial = p.readInt();
@@ -437,7 +436,7 @@ public class MT6580 extends RIL implements CommandsInterface {
             p.setDataPosition(dataPosition);
 
             // Forward responses that we are not overriding to the super class
-            return super.processSolicited(p, type);
+            return super.processSolicited(p);
         }
 
 
@@ -448,7 +447,7 @@ public class MT6580 extends RIL implements CommandsInterface {
         }
 
         Object ret = null;
-        
+
         if (error == 0 || p.dataAvail() > 0) {
             switch (rr.mRequest) {
                 case RIL_REQUEST_EMERGENCY_DIAL: ret =  responseVoid(p); break;
@@ -515,5 +514,5 @@ public class MT6580 extends RIL implements CommandsInterface {
         }
         super.iccIOForApp(command, fileid, path, p1, p2, p3, data, pin2, aid, result);
     }
-   
+
 }
