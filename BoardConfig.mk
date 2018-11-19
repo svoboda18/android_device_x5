@@ -3,6 +3,9 @@
 
 TARGET_SPECIFIC_HEADER_PATH := device/doogee/x5/include
 
+USE_CAMERA_STUB := true
+TARGET_PROVIDES_INIT_RC := true
+
 # ODEX
 WITH_DEXPREOPT := false
 DISABLE_DEXPREOPT := true

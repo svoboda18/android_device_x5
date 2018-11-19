@@ -121,9 +121,32 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/system/etc/permissions/android.hardware.microphone.xml:system/etc/permissions/android.hardware.microphone.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml 
 
+# Enable Google-specific location features,
+# like NetworkLocationProvider and LocationCollector
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.com.google.locationfeatures=1 \
+    ro.com.google.networklocation=1
+
+# Extended JNI checks:
+# The extended JNI checks will cause the system to run more slowly, but they can spot a variety of nasty bugs 
+# before they have a chance to cause problems.
+# Default=true for development builds, set by android buildsystem
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.kernel.android.checkjni=0 \
+    ro.kernel.checkjni=0 \
+    dalvik.vm.checkjni=false
+
+# Dex2Oat multi-thread
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.fw.dex2oat_thread_count=4
+
 # USB
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp,adb
+
+# Advanced Network Settings
+PRODUCT_PACKAGES += \
+    CarrierConfig
 
 # Torch
 PRODUCT_PACKAGES += \
@@ -147,11 +170,15 @@ PRODUCT_PACKAGES += \
 
 # GPS
 PRODUCT_PACKAGES += \
-	gps.mt6580
+    gps.mt6580
 
 # MiraVision
 PRODUCT_PACKAGES += \
-	MiraVision
+    MiraVision
+
+# Moto-Doze(CMActions)
+PRODUCT_PACKAGES += \
+    CMActions
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
