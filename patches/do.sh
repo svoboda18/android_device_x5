@@ -17,7 +17,9 @@ cd ..
 cd frameworks/av
 patch -p1 < ../../device/doogee/x5/patches/framworks-av.patch
 cd ../..
-#
+cd frameworks/opt/telephony
+patch -p1 < ../../../device/doogee/x5/patches/operator-name.patch
+cd ../../..
 patch -p1 < device/doogee/x5/patches/kpd-keys.patch
 cd external/wpa_supplicant_8
 patch -p1 < ../../device/doogee/x5/patches/nvram-fix.patch
