@@ -1,0 +1,49 @@
+From eda229a6cd09a8670da65a7b52348a32f539bc57 Mon Sep 17 00:00:00 2001
+From: Pedro Pereira <pedropereirex@gmail.com>
+Date: Sun, 4 Feb 2018 14:05:04 +0000
+Subject: [PATCH] Lunch MiraVision from Settings
+
+---
+ res/values/strings.xml |  3 +++
+ res/xml/display.xml    | 11 +++++++++++
+ 2 files changed, 14 insertions(+)
+
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index c929867..1ca2d1b 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -14,6 +14,9 @@
+      limitations under the License.
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- MiraVision -->
++    <string name="mira_vision_title" translatable="false">MiraVision</string>
++    <string name="mira_vision_summary">Provider the best visual effects</string>
+     <!-- Strings for Dialog yes button -->
+     <string name="yes">"Yes"</string>
+     <!-- Strings for Dialog no button -->
+diff --git a/res/xml/display.xml b/res/xml/display.xml
+index da16829..1417014 100644
+--- a/res/xml/display.xml
++++ b/res/xml/display.xml
+@@ -23,6 +23,17 @@
+         android:key="display"
+         android:title="@string/display_label">
+ 
++        <!-- MiraVision -->
++        <PreferenceScreen
++                android:key="mira_vision"
++                android:title="@string/mira_vision_title"
++                android:summary="@string/mira_vision_summary">
++            <intent
++                    android:action="android.intent.action.MAIN"
++                    android:targetPackage="com.mediatek.miravision.ui"
++                    android:targetClass="com.mediatek.miravision.ui.MiraVisionActivity" />
++        </PreferenceScreen>
++
+         <!-- Brightness slider -->
+         <PreferenceScreen
+                 android:key="brightness"
+-- 
+2.7.4
+
