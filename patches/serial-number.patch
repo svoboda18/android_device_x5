@@ -23,11 +23,11 @@ index 8ea42ca..6afd984 100644
 +  size_t m;
 +  serialdir = open("/sys/sys_info/serial_number", O_RDWR);
 +              if (serialdir < 0) {
-+                   NOTICE("fail to open:", "/sys/sys_info/serial_number");
++                   NOTICE("fail to open: %s\n", "/sys/sys_info/serial_number");
 +                   return 0;
 +                    }
-+  m = read(fd, serialno, sizeof(char)*32);
-+  serial[s-1] = '\0';
++  m = read(serialdir, serial, sizeof(char)*32);
++  serial[m-1] = '\0';
 +  close(serialdir);
 +
 +  if (m <= 0) {
