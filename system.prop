@@ -28,6 +28,7 @@ ril.flightmode.poweroffMD=1
 ril.telephony.mode=0
 ril.read.imsi=1
 ril.radiooff.poweroffMD=0
+ro.sim_refresh_reset_by_modem=1
 
 # WiFi
 wifi.interface=wlan0
@@ -38,6 +39,7 @@ wifi.tethering.interface=ap0
 wifi.direct.interface=p2p0
 mediatek.wlan.chip=CONSYS_MT6735
 mediatek.wlan.module.postfix=_consys_mt6735
+wfd.dummy.enable=1
 
 # FM
 persist.radio.fd.counter=15
@@ -45,6 +47,21 @@ persist.radio.fd.off.counter=5
 persist.radio.fd.r8.counter=15
 persist.radio.fd.off.r8.counter=5
 fmradio.driver.enable=1
+
+# Miravision
+ro.mtk_voice_extension_support=1
+persist.sys.display.clearMotion=1
+persist.clearMotion.fblevel.nrm=255
+persist.clearMotion.fblevel.bdr=255
+ro.mtk_clearmotion_support=1
+ro.mtk_slow_motion_support=1
+ro.mtk_16x_slowmotion_support=1
+persist.sys.mitalk.enable=true
+persist.power.useautobrightadj=true
+camera.disable_zsl_mode=1
+
+# AEE
+ro.have_aee_feature=1
 
 # USB
 ro.sys.usb.mtp.whql.enable=0
@@ -84,3 +101,9 @@ ro.egl.destroy_after_detach=true
 dalvik.vm.jit.codecachesize=0
 ro.config.max_starting_bg=6
 config.disable_atlas=true
+
+# Extra
+persist.sys.mitalk.enable=true
+persist.power.useautobrightadj=true
+keyguard.no_require_sim=true
+persist.sys.isUsbOtgEnabled=true
