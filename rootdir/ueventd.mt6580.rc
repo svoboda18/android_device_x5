@@ -9,13 +9,21 @@
 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/secro     0640    root    system
 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/seccfg    0660    root    system
 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/proinfo   0660    root    system
+/dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/otp       0640    root    system
 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/nvram     0660    root    system
 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/para      0660    root    system
-/dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/logo      0660    root    system
+/dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/logo      0640    root    system
 /dev/block/platform/mtk-msdc.0/11120000.msdc0/by-name/frp       0660    root    system
 
+/dev/pro_info 0660 root system
+/dev/otp 0640 root system
+/dev/nvram 0660 root system
+/dev/misc 0660 root system
+/dev/misc2 0660 root system
+
+
 # OTP
-/dev/otp                 0660 system system
+/dev/otp                  0660   system     system
 
 # Connectivity
 /dev/stpwmt               0660   system     system
@@ -72,8 +80,6 @@
 /dev/ccci_aud             0660   audio      audio
 /dev/ccci2_aud            0660   audio      audio
 /dev/eemcs_aud            0660   audio      audio
-/dev/irtx                 0660   system     system
-/dev/ir-learning          0660   system     system
 
 # SGX device node
 /dev/pvrsrvkm             0666   root       root
