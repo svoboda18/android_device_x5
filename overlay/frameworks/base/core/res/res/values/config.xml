@@ -36,9 +36,7 @@
     
     <!-- Disable led notification in setting -->
      <bool name="config_intrusiveNotificationLed">false</bool>
-     <bool name="config_multiColorNotificationLed">false</bool>
      <bool name="config_intrusiveBatteryLed">false</bool>
-     <bool name="config_multiColorBatteryLed">false</bool>
      <bool name="config_useAttentionLight">false</bool>
      <bool name="config_wifi_background_scan_support">false</bool>
  
@@ -47,16 +45,10 @@
      <bool name="config_autoPowerModePreferWristTilt">false</bool>
      <bool name="config_autoPowerModePrefetchLocation">true</bool>
      
-    <!-- Disable 5GHZ -->
-     <bool name="config_wifi_enable_5GHz_preference">false</bool>
-     
     <!-- Enable blur setting -->
      <bool name="config_sf_slowBlur">true</bool>
-     <bool name="config_ui_blur_enabled">true</bool>
    
-    <!-- Battery fully notification -->
-     <bool name="config_showBatteryFullyChargedNotification">true</bool>
-     <!-- miracast ebabler -->
+    <!-- miracast ebabler -->
      <bool name="config_enableWifiDisplay">true</bool>
    
     <!-- Wifi DualBand -->
