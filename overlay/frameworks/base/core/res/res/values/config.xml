@@ -18,15 +18,49 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-<!-- ambient display -->
+   
+   <!-- ambient display -->
      <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
      <bool name="config_dozeAfterScreenOff">true</bool>
      <integer name="config_screenBrightnessDoze">10</integer>
-    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">false</bool>
-    <bool name="config_powerDecoupleInteractiveModeFromDisplay">true</bool>    
-<!-- Set to true to add links to Cell Broadcast app from Settings and MMS app. -->
-    <bool name="config_cellBroadcastAppLinks">false</bool>
-
+     <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">false</bool>
+     <bool name="config_powerDecoupleInteractiveModeFromDisplay">true</bool>    
+    
+    <!-- Set to true to add links to Cell Broadcast app from Settings and MMS app. --> 
+     <bool name="config_cellBroadcastAppLinks">false</bool>
+    
+    <!-- screen brightness -->
+     <integer name="config_screenBrightnessSettingMinimum">1</integer>
+     <integer name="config_screenBrightnessDim">1</integer>
+     <integer name="config_screenBrightnessDark">1</integer>
+    
+    <!-- Disable led notification in setting -->
+     <bool name="config_intrusiveNotificationLed">false</bool>
+     <bool name="config_multiColorNotificationLed">false</bool>
+     <bool name="config_intrusiveBatteryLed">false</bool>
+     <bool name="config_multiColorBatteryLed">false</bool>
+     <bool name="config_useAttentionLight">false</bool>
+     <bool name="config_wifi_background_scan_support">false</bool>
+ 
+    <!-- Doze power saving -->
+     <bool name="config_enableAutoPowerModes">true</bool>
+     <bool name="config_autoPowerModePreferWristTilt">false</bool>
+     <bool name="config_autoPowerModePrefetchLocation">true</bool>
+     
+    <!-- Disable 5GHZ -->
+     <bool name="config_wifi_enable_5GHz_preference">false</bool>
+     
+    <!-- Enable blur setting -->
+     <bool name="config_sf_slowBlur">true</bool>
+     <bool name="config_ui_blur_enabled">true</bool>
+   
+    <!-- Battery fully notification -->
+     <bool name="config_showBatteryFullyChargedNotification">true</bool>
+     <!-- miracast ebabler -->
+     <bool name="config_enableWifiDisplay">true</bool>
+   
+    <!-- Wifi DualBand -->
+     <bool name="config_wifi_dual_band_support">false</bool>
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
          USB interfaces.  If the device doesn't want to support tething over USB this should
          be empty.  An example would be "usb.*" -->
