@@ -10,7 +10,6 @@ qemu.hw.mainkeys=1
 # RIL
 rild.libpath=/system/lib/mtk-ril.so
 rild.libargs=-d /dev/ttyC0
-ro.telephony.default_network=0
 
 # WiFi
 wifi.interface=wlan0
@@ -42,9 +41,12 @@ ro.sf.lcd_density=320
 
 # Performance
 ro.sys.fw.bg_apps_limit=11
-ro.config.ksm=true
 dalvik.vm.jit.codecachesize=0
 ro.config.max_starting_bg=6
+config.disable_atlas=true
+
+# Google assistent enabler
+ro.opa.eligible_device=true
 
 # Time Zone
 persist.sys.timezone=Europe/Moscow
