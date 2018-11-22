@@ -23,7 +23,6 @@
      <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
      <bool name="config_dozeAfterScreenOff">true</bool>
      <integer name="config_screenBrightnessDoze">10</integer>
-     <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">false</bool>
      <bool name="config_powerDecoupleInteractiveModeFromDisplay">true</bool>    
     
     <!-- Set to true to add links to Cell Broadcast app from Settings and MMS app. --> 
@@ -38,19 +37,24 @@
      <bool name="config_intrusiveNotificationLed">false</bool>
      <bool name="config_intrusiveBatteryLed">false</bool>
      <bool name="config_useAttentionLight">false</bool>
-     <bool name="config_wifi_background_scan_support">false</bool>
  
     <!-- Doze power saving -->
      <bool name="config_enableAutoPowerModes">true</bool>
-     <bool name="config_autoPowerModePreferWristTilt">false</bool>
      <bool name="config_autoPowerModePrefetchLocation">true</bool>
-
+     
+     <!-- Enable blur support -->
+    <bool name="config_uiBlurEnabled">true</bool>
    
+ <!-- Indicate whether to allow the device to suspend when the screen is off
+         due to the proximity sensor.  This resource should only be set to true
+         if the sensor HAL correctly handles the proximity sensor as a wake-up source.
+         Otherwise, the device may fail to wake out of suspend reliably.
+         The default is false. -->
+    <bool name="config_suspendWhenScreenOffDueToProximity">true</bool>	
+	
     <!-- miracast ebabler -->
      <bool name="config_enableWifiDisplay">true</bool>
    
-    <!-- Wifi DualBand -->
-     <bool name="config_wifi_dual_band_support">false</bool>
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
          USB interfaces.  If the device doesn't want to support tething over USB this should
          be empty.  An example would be "usb.*" -->
@@ -252,10 +256,10 @@
          This flag controls whether the {@link Display#FLAG_SUPPORTS_PROTECTED_BUFFERS}
          flag is set for wifi displays.
     -->
-    <bool name="config_wifiDisplaySupportsProtectedBuffers">false</bool>
+    <bool name="config_wifiDisplaySupportsProtectedBuffers">true</bool>
 
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
-    <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
+    <bool translatable="false" name="config_wifi_dual_band_support">false</bool>
 
     <!-- Boolean indicating whether the wifi chipset has background scan support -->
     <bool translatable="false" name="config_wifi_background_scan_support">false</bool>
