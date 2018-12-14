@@ -23,7 +23,7 @@ cd frameworks/native
 patch -p1 < ../../device/doogee/x5/patches/frameworks_native/frameworks_native.patch
 cd ../..
 cd frameworks/base
-patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base.patch
+#patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base.patch
 patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base-2.patch
 patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base-3.patch
 patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base-4.patch
@@ -42,8 +42,8 @@ cd packages/apps/Snap
 patch -p1 < ../../../device/doogee/x5/patches/packages_apps_snap/packages_apps_snap.patch
 git clean -f
 cd ../Settings
-patch -p1 < ../../../device/doogee/x5/patches/package_apps_settings/package_apps_settings.patch
-patch -p1 -b < ../../../device/doogee/x5/patches/package_apps_settings/package_apps_settings-2.patch
-patch -p1 -b < ../../../device/doogee/x5/patches/package_apps_settings/package_apps_settings-3.patch
+patch -p1 < ../../../device/doogee/x5/patches/packages_apps_settings/packages_apps_settings.patch
+patch -p1 -b < ../../../device/doogee/x5/patches/packages_apps_settings/packages_apps_settings-2.patch
+patch -p1 -b < ../../../device/doogee/x5/patches/packages_apps_settings/packages_apps_settings-3.patch
 git clean -fd
 cd ../../..
