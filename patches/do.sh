@@ -40,10 +40,10 @@ patch -p1 < ../../device/doogee/x5/patches/external_wpa_supplicant_8/external_wp
 cd ../..
 cd packages/apps/Snap
 patch -p1 < ../../../device/doogee/x5/patches/packages_apps_snap/packages_apps_snap.patch
-cd ..
-cd packages/apps/Settings
+git clean -f
+cd ../Settings
 patch -p1 < ../../../device/doogee/x5/patches/package_apps_settings/package_apps_settings.patch
 patch -p1 -b < ../../../device/doogee/x5/patches/package_apps_settings/package_apps_settings-2.patch
 patch -p1 -b < ../../../device/doogee/x5/patches/package_apps_settings/package_apps_settings-3.patch
-git clean -f -d
+git clean -fd
 cd ../../..
