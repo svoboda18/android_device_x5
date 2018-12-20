@@ -178,9 +178,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     MiraVision
 
-# Moto-Doze(CMActions)
-#PRODUCT_PACKAGES += \
-    CMActions
+# Lineageless Doze
+PRODUCT_PACKAGES += \
+    Doze
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
