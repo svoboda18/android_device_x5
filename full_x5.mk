@@ -142,10 +142,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp,adb
 
-# Advanced Network Settings
-PRODUCT_PACKAGES += \
-    CarrierConfig
-
 # Torch
 PRODUCT_PACKAGES += \
     Torch
@@ -167,7 +163,7 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Snap
+    SnapdragonCamera
 
 # mrdump related
 PRODUCT_PACKAGES += \
@@ -177,18 +173,13 @@ PRODUCT_PACKAGES += \
 # GPS
 PRODUCT_PACKAGES += \
     gps.mt6580
-    
-# Custom PowerHal
-# Copyright (C) By SaMad SrgMane
-PRODUCT_PACKAGES += \
-    power.mt6580
 
 # MiraVision
 PRODUCT_PACKAGES += \
     MiraVision
 
 # Moto-Doze(CMActions)
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     CMActions
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0

@@ -2,6 +2,7 @@
 -include vendor/doogee/x5/BoardConfigVendor.mk
 
 TARGET_SPECIFIC_HEADER_PATH := device/doogee/x5/include
+TARGET_SYSTEM_PROP += device/doogee/x5/system.prop
 
 USE_CAMERA_STUB := true
 TARGET_PROVIDES_INIT_RC := true

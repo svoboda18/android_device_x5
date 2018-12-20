@@ -38,7 +38,7 @@ cd external/wpa_supplicant_8
 patch -p1 < ../../device/doogee/x5/patches/external_wpa_supplicant_8/external_wpa_supplicant_8.patch
 patch -p1 < ../../device/doogee/x5/patches/external_wpa_supplicant_8/external_wpa_supplicant_8-2.patch
 cd ../..
-cd packages/apps/Snap
+cd packages/apps/SnapdragonCamera
 patch -p1 < ../../../device/doogee/x5/patches/packages_apps_snap/packages_apps_snap.patch
 git clean -f
 cd ../Settings

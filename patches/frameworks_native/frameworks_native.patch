@@ -7,7 +7,6 @@ Change-Id: I105c019d026520bd02314da20ecbb7f15435e7a9
 ---
  include/gui/BufferQueueCore.h        |   3 +-
  include/gui/IProducerListener.h      |   6 ++
- include/media/openmax/OMX_IVCommon.h |  11 +++
  include/ui/Fence.h                   |  15 ++--
  include/ui/mediatek/GuiExtMonitor.h  | 133 +++++++++++++++++++++++++++++++++++
  include/ui/mediatek/IDumpTunnel.h    |  49 +++++++++++++
@@ -89,28 +88,6 @@ index b7826c6..e5a5a45 100644
  };
  
  } // namespace android
-diff --git a/include/media/openmax/OMX_IVCommon.h b/include/media/openmax/OMX_IVCommon.h
-index f9b6f4b..05317cd 100644
---- a/include/media/openmax/OMX_IVCommon.h
-+++ b/include/media/openmax/OMX_IVCommon.h
-@@ -164,6 +164,17 @@ typedef enum OMX_COLOR_FORMATTYPE {
-      *  codec can substitute any YUV420 packed planar or semiplanar
-      *  format for it. */
-     OMX_COLOR_FormatYUV420Flexible = 0x7F420888,
-+    #ifdef MTK_NATIVE_HARDWARE
-+    OMX_COLOR_FormatVendorMTKYUV = 0x7F000001,
-+    OMX_COLOR_FormatVendorMTKYUV_FCM = 0x7F000002,
-+    OMX_COLOR_FormatVendorMTKYUV_UFO = 0x7F000003,
-+    OMX_COLOR_FormatVendorMTKYUV_10BIT_H = 0x7F000004,
-+    OMX_COLOR_FormatVendorMTKYUV_10BIT_V = 0x7F000005,
-+    OMX_COLOR_FormatVendorMTKYUV_UFO_10BIT_H = 0x7F000006,
-+    OMX_COLOR_FormatVendorMTKYUV_UFO_10BIT_V = 0x7F000007,
-+    OMX_MTK_COLOR_FormatYV12 = 0x7F000200,
-+    OMX_MTK_COLOR_FormatBitStream = 0x7F000300,
-+    #endif
- 
-     OMX_TI_COLOR_FormatYUV420PackedSemiPlanar = 0x7F000100,
-     OMX_QCOM_COLOR_FormatYVU420SemiPlanar = 0x7FA30C00,
 diff --git a/include/ui/Fence.h b/include/ui/Fence.h
 index 48a7aa3..4e68952 100644
 --- a/include/ui/Fence.h
