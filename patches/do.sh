@@ -23,7 +23,7 @@ cd frameworks/native
 patch -p1 < ../../device/doogee/x5/patches/frameworks_native/frameworks_native.patch
 cd ../..
 cd frameworks/base
-#patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base.patch
+patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base.patch
 patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base-2.patch
 patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base-3.patch
 patch -p1 < ../../device/doogee/x5/patches/frameworks_base/frameworks_base-4.patch
