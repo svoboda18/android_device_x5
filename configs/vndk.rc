@@ -1,0 +1,14 @@
+on post-fs
+	exec - root -- /system/bin/vndk-detect
+	exec - root -- /system/bin/rw-system.sh
+	mount none /system/etc/usb_audio_policy_configuration.xml /vendor/etc/usb_audio_policy_configuration.xml bind
+	export LD_CONFIG_FILE /system/etc/ld.config.${persist.sys.vndk}.txt
+
+service mtk_x5 /system/bin/mtk_x5.sh
+    oneshot
+    disabled
+
+on property:sys.boot_completed=1
+    start mtk_x5
+    chown wifi system /data/misc/wifi
+    chown system wifi /data/misc/wifi/hostapd.conf
