@@ -143,7 +143,6 @@ done
 
 # DO NOT EDIT THIS
 SUBS_REPOS="
-build
 frameworks/av
 frameworks/native
 frameworks/base
@@ -156,7 +155,6 @@ system/netd
 system/vold
 system/libvintf
 packages/apps/Settings
-packages/services/Telephony
 external/selinux"
 
 unset RESULT_STRING
@@ -182,6 +180,10 @@ for FOLDER in ${SUBS_REPOS}; do
     URL=platform_$( echo ${FOLDER} | sed "s/\//_/g" )
 
     BRANCH=android-9.0.0_r21-phh
+    
+    if [ ${FOLDER} == "system/libvintf" ]; then
+    BRANCH=android-8.1.0_r48-phh
+    fi
 
     # FETCH THE REPO
     git fetch https://github.com/phhusson/${URL} ${BRANCH}
@@ -192,7 +194,7 @@ for FOLDER in ${SUBS_REPOS}; do
 
     # SECOND HASH WILL BE THE LAST THING I COMMITTED
     NUMBER_OF_COMMITS=$(( $( git log --format=%H --committer="Pierre-Hugues" FETCH_HEAD | wc -l ) - 1 ))
-    SECOND_HASH=$(git log --format=%H --committer="Pierre-Hugues" FETCH_HEAD~${NUMBER_OF_COMMITS}^..FETCH_HEAD~${NUMBER_OF_COMMITS})
+    SECOND_HASH=$(git log --format=%H --committer="Pierre-Hugues" FETCH_HEAD~${NUMBER_OF_COMMITS}^)
 
     # NOW THAT WE HAVE THE HASHES, WE WANT TO TRY AND SEE IF OMS ALREADY EXISTS
     # THIS SCRIPT NEEDS TO BE RUN ON A CLEAN REPO
