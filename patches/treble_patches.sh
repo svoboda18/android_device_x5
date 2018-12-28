@@ -153,12 +153,10 @@ system/bt
 system/sepolicy
 system/netd
 system/vold
-system/libvintf
 packages/apps/Settings
 external/selinux"
 
 unset RESULT_STRING
-
 
 ################
 #              #
@@ -180,10 +178,6 @@ for FOLDER in ${SUBS_REPOS}; do
     URL=platform_$( echo ${FOLDER} | sed "s/\//_/g" )
 
     BRANCH=android-9.0.0_r21-phh
-    
-    if [ ${FOLDER} == "system/libvintf" ]; then
-    BRANCH=android-8.1.0_r48-phh
-    fi
 
     # FETCH THE REPO
     git fetch https://github.com/phhusson/${URL} ${BRANCH}
@@ -194,8 +188,10 @@ for FOLDER in ${SUBS_REPOS}; do
 
     # SECOND HASH WILL BE THE LAST THING I COMMITTED
     NUMBER_OF_COMMITS=$(( $( git log --format=%H --committer="Pierre-Hugues" FETCH_HEAD | wc -l ) - 1 ))
-    SECOND_HASH=$(git log --format=%H --committer="Pierre-Hugues" FETCH_HEAD~${NUMBER_OF_COMMITS}^)
-
+    
+    SECOND_HASH=$(git log --format=%H --committer="Pierre-Hugues" FETCH_HEAD~${NUMBER_OF_COMMITS}^..FETCH_HEAD~${NUMBER_OF_COMMITS})
+    
+    if [ ! ${FOLDER} == "system/vold" ]; then
     # NOW THAT WE HAVE THE HASHES, WE WANT TO TRY AND SEE IF OMS ALREADY EXISTS
     # THIS SCRIPT NEEDS TO BE RUN ON A CLEAN REPO
     SECOND_COMMIT_MESSAGE=$( git log --format=%s ${SECOND_HASH}^..${SECOND_HASH} | sed "s/\[\([^]]*\)\]/\\\[\1\\\]/g" )
@@ -207,7 +203,11 @@ for FOLDER in ${SUBS_REPOS}; do
     git reset --hard HEAD
     # PICK THE COMMITS IF EVERYTHING CHECKS OUT
     git cherry-pick --strategy=recursive -X theirs ${SECOND_HASH}^..${FIRST_HASH}
+    
+    else
+    git cherry-pick --strategy=recursive -X theirs 5e0330c559b8570ca5daca59d8a769806d20c691^..a467d362b79ac1ee20d3f767947ea9dfe8f59ea0
 
+    fi
     # ADD TO RESULT STRING
     if [[ $? -ne 0 ]]; then
         RESULT_STRING+="${FOLDER}: ${RED}FAILED${RESTORE}\n"

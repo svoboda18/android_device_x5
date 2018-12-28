@@ -14,6 +14,12 @@ sleep 2
 cd ../../../..
 LOS_REPO=${PWD}
 }
+echo "Applying Local Patches First"
+cd ../../../..
+cd build
+patch -p1 < ../device/doogee/x5/patches/platform_build/set-finger.patch
+cd $CURRENT_DIR
+
 warn
 
 find
