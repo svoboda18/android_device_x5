@@ -7,7 +7,7 @@ PRODUCT_COPY_FILES += \
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += device/doogee/x5/sepolicy
 DEVICE_PACKAGE_OVERLAYS += device/doogee/x5/overlay
 
-$(call inherit-product, vendor/hardware_overlay/overlay.mk)
+#$(call inherit-product, vendor/hardware_overlay/overlay.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
 # Overrides

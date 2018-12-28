@@ -1,9 +1,12 @@
+# Release name
+PRODUCT_RELEASE_NAME := X5
+
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 -include vendor/lineage/build/core/config.mk
 -include vendor/lineage/build/core/apicheck.mk
 include build/make/target/product/treble_common.mk
 $(call inherit-product, device/doogee/x5/device.mk)
-$(call inherit-product, vendor/vndk/vndk-binder32.mk)
+$(call inherit-product, vendor/doogee/x5/x5-vndk.mk)
 
 PRODUCT_DEVICE := x5
 PRODUCT_NAME := lineage_x5
